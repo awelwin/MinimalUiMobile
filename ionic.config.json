@@ -1,0 +1,7 @@
+{
+  "name": "MinimalUiMobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
