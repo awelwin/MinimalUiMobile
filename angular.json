@@ -31,7 +31,10 @@
                 "output": "assets"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": [
+              "src/global.scss",
+              "src/theme/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -56,19 +59,25 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "developmentDocker": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.developmentDocker.ts"
+                }
+              ]
             },
             "ci": {
               "progress": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "developmentDocker"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -76,14 +85,14 @@
             "production": {
               "buildTarget": "app:build:production"
             },
-            "development": {
-              "buildTarget": "app:build:development"
+            "developmentDocker": {
+              "buildTarget": "app:build:developmentDocker"
             },
             "ci": {
               "progress": false
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "developmentDocker"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -106,7 +115,10 @@
                 "output": "assets"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": [
+              "src/global.scss",
+              "src/theme/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -119,14 +131,19 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"]
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ]
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {
