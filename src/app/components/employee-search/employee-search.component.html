@@ -1,0 +1,28 @@
+<div class="ion-page">
+
+    <div class="search">
+        <ion-searchbar [debounce]="1000" (ionCancel)=searchDebounce($event) (ionInput)=searchDebounce($event)
+            placeholder=". . ." class="search-bar"></ion-searchbar>
+    </div>
+    <ion-content>
+        <ion-list lines="full">
+
+            <!--no results-->
+            <ion-item *ngIf="_searchNoResult">
+                <ion-label>no results</ion-label>
+            </ion-item>
+
+            <!--result-->
+            <ion-item *ngFor="let data of _searchResults;" (click)=searchResultChosen(data.id)>
+                <ion-label>
+                    <ion-icon name="person-outline"></ion-icon>
+                    {{data.firstname}} {{data.lastname}}
+                </ion-label>
+                <span class="search-result">
+                    #{{data.id}} Age {{data.id}}
+                </span>
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+</div>

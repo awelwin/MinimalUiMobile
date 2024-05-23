@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  //MinimalApi
+  serviceUri: "https://PRODUCTION/api/v1/",
+
 };

@@ -1,0 +1,21 @@
+ion-content {
+
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --padding-top: 0px;
+    --margin-top: 0px;
+    --padding-bottom: 15px;
+}
+
+.search {
+    background-color: black;
+
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 10px;
+}
+
+.search-result {
+    color: rgba(128, 128, 128, 0.678);
+    text-overflow: ellipsis;
+    cursor: pointer;
+}

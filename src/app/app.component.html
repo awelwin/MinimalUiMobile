@@ -1,3 +1,37 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <!--HIDDEN POPOUT MENU CONTENT-->
+  <ion-menu contentId="main-content" class="app-menu"> <!--THIS ELEMENT MAKING CONTENT NOT CLICKABLE--->
+    <ion-list>
+      <ion-menu-toggle>
+        <ion-item routerLink="/employees">
+          <ion-icon aria-hidden="true" name="people" slot="start"></ion-icon>
+          <ion-label>Employees</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-item>
+        <ion-icon aria-hidden=" true" name="call-outline" slot="start"></ion-icon>
+        <ion-label>Contact</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-menu>
+
+
+
+
+  <!--HEAD TOOLBAR-->
+  <ion-header>
+    <div>
+      <ion-toolbar>
+        <ion-buttons slot="start"><ion-menu-button></ion-menu-button></ion-buttons>
+        <ion-title>MINIMAL UI</ion-title>
+      </ion-toolbar>
+    </div>
+  </ion-header>
+
+  <div class="ion-page app-body" id="main-content">
+    <ion-content class="ion-padding">
+      <router-outlet></router-outlet>
+    </ion-content>
+  </div>
 </ion-app>
