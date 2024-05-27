@@ -39,10 +39,10 @@ export class RepositoryService<T extends IEntity> {
     /**
      * Post resource
      */
-    public post(resource: T, resourceName: string): Observable<T> {
+    public post(resource: T): Observable<T> {
 
         //resource identifier
-        var url = this._serviceUri + resourceName
+        var url = this._serviceUri + this._resource
 
         return this._http.post<T>(url, resource, this.requestOptions)
     }
@@ -72,9 +72,9 @@ export class RepositoryService<T extends IEntity> {
      * Update resource
      * @param resource resource instance to persist
      */
-    public put(id: number, resource: T): Observable<HttpEvent<any>> {
+    public put(id: number): Observable<HttpEvent<any>> {
         let url = this._serviceUri + this._resource + "/" + id;
-        return this._http.put<HttpEvent<any>>(url, resource, this.requestOptions);
+        return this._http.put<HttpEvent<any>>(url, this._resource, this.requestOptions);
     }
 
     /**

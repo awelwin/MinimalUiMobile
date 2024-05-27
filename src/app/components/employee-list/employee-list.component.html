@@ -1,3 +1,41 @@
-<p>
-  EMPLOYEE LIST COMPONENT
-</p>
+<div class="ion-page">
+
+  <!--LIST-->
+  <ion-content>
+
+    <!--List Item-->
+    <ion-card *ngFor=" let e of _list$ | async">
+
+      <!-- header -->
+      <ion-card-header>
+        <ion-card-title>
+          <div class="title">
+            <ion-badge>{{e.taxFile.taxFileRecords.length}} </ion-badge>
+            <ion-text> {{e.firstname}} {{e.lastname}}</ion-text>
+          </div>
+
+          <!--Menu-->
+          <div class="menu">
+            <ion-button fill="clear" class="menu-button" (click)="openMenu(e)">
+              <ion-icon name="ellipsis-vertical-outline" class="menu-button"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-card-title>
+
+        <!--subtitle-->
+        <ion-card-subtitle>
+          <ion-text>
+            {{e.taxFile.alias}}
+          </ion-text>
+
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <!--content-->
+      <ion-card-content>
+        Age {{e.age}} | {{e.created | date: "MMM d,y"}}
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+
+</div>

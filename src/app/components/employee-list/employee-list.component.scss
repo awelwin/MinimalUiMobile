@@ -1,0 +1,74 @@
+ion-content {
+    padding: 0px;
+    margin: 0px;
+
+
+}
+
+ion-card {
+    border: 1px solid rgb(150, 150, 150);
+    box-shadow: 8px 8px rgb(226, 226, 226);
+    margin: 40px 40px 0px 40px;
+    padding: 5px;
+}
+
+ion-card-header {
+    padding: 0px 5px 0px 5px;
+}
+
+ion-card-title {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0px;
+    display: flex;
+    overflow: hidden;
+}
+
+ion-card-subtitle {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    margin: 0px;
+}
+
+ion-card-content {
+    padding-left: 10px;
+    margin: 0px
+}
+
+.title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: nowrap;
+    width: 100%;
+    vertical-align: bottom;
+}
+
+.menu {
+    color: black;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    text-align: right;
+    min-width: 0;
+    vertical-align: top;
+    width: 50px;
+
+}
+
+.menu-button {
+
+    padding: 0px;
+    margin: 0px;
+    vertical-align: top;
+    text-align: right;
+    justify-content: right;
+}
+
+ion-icon {
+    color: black;
+    padding: 0px;
+    margin: 0px;
+    vertical-align: top;
+}

@@ -8,6 +8,7 @@ import { environment } from './environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { QueryService } from './app/services/QueryService';
 import { RepositoryServiceFactory } from './app/services/RepositoryServiceFactory';
+import { ModalController } from '@ionic/angular';
 
 //Factory methods
 export function getRepositoryServiceFactory(http: HttpClient) {
@@ -25,6 +26,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(HttpClientModule),
     Router,
+    ModalController,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: QueryService, useFactory: QueryServiceFactory, deps: [HttpClient] },
     { provide: RepositoryServiceFactory, useFactory: getRepositoryServiceFactory, deps: [HttpClient] },

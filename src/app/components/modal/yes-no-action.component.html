@@ -1,0 +1,18 @@
+<div class="wrapper">
+
+    <!--Head-->
+    <div class="modal-header border-0">
+        <h4 class="border-none">{{this.action?.title}}</h4>
+    </div>
+    <!--Body-->
+    <div>
+        <p>{{this.action?.message}}</p>
+    </div>
+
+    <!--Foot-->
+    <div>
+        <ion-button (click)=(accept())>Proceed</ion-button>
+        <ion-button (click)=(cancel())>Cancel</ion-button>
+    </div>
+
+</div>
