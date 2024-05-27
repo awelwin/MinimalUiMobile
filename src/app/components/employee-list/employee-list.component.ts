@@ -118,7 +118,7 @@ export class EmployeeListComponent implements OnInit {
     actionSheet.onDidDismiss()
       .then((x: OverlayEventDetail<any>) => {
 
-        switch (x.data.action) {
+        switch (x.data?.action) {
 
           //DELETE 
           case ActionSheetActionType.DELETE:
