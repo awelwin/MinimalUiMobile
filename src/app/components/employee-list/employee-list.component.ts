@@ -7,19 +7,20 @@ import { NgFor } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs/internal/Observable';
 import { RepositoryServiceFactory } from 'src/app/services/RepositoryServiceFactory';
-import { IonCard, IonBadge, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonContent, IonItem, IonLabel, IonText, IonToolbar, IonButton, IonIcon, IonActionSheet } from "@ionic/angular/standalone";
+import { IonCard, IonBadge, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonContent, IonItem, IonLabel, IonText, IonToolbar, IonButton, IonIcon, IonActionSheet, IonSearchbar } from "@ionic/angular/standalone";
 import { DatePipe } from '@angular/common';
-import { ellipsisVerticalOutline } from 'ionicons/icons';
+import { ellipsisVerticalOutline, filterOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-import { ActionSheetController, ModalController } from '@ionic/angular';
-import { OverlayEventDetail, IonActionSheetCustomEvent } from '@ionic/core';
+import { ActionSheetController, ModalController, SearchbarInputEventDetail } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core';
 import { ActionSheetActionType } from 'src/app/lib/ActionSheetActionType';
+import { ISearchbarCustomEvent } from 'src/app/lib/ISearchbarCustomEvent'
 import { Router } from '@angular/router';
 import { YesNoActionComponent } from '../modal/yes-no-action.component';
 import { ModalAction } from '../modal/ModalAction';
 import { ActionType } from 'src/app/lib/ActionType';
 import { ModalRole } from '../modal/ModalRole';
-import { Subject, merge, startWith, switchMap } from 'rxjs';
+import { Subject, combineLatest, map, of, startWith, switchMap, } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 
 @Component({
@@ -27,21 +28,20 @@ import { HttpEvent } from '@angular/common/http';
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss'],
   standalone: true,
-  imports: [IonActionSheet, IonIcon, IonButton, IonToolbar, IonText, IonLabel, IonItem, IonContent, IonBadge, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, NgFor, AsyncPipe, DatePipe]
+  imports: [IonSearchbar, IonActionSheet, IonIcon, IonButton, IonToolbar, IonText, IonLabel, IonItem, IonContent, IonBadge, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, NgFor, AsyncPipe, DatePipe,]
 })
 export class EmployeeListComponent implements OnInit {
 
-  //UI Events
-  _list$!: Observable<Employee[]>;
+  _filter$ = new Subject<string | undefined | null>;
   _createClick$ = new Subject<Employee>;
   _updateClick$ = new Subject<Employee>;
   _deleteClick$ = new Subject<Employee>;
-
-  //User Actions
   _create$!: Observable<Employee>;
-  _update$!: Observable<Employee>;
-  _delete$!: Observable<HttpEvent<any>>;
-  _userAction$!: Observable<any>;
+  _update$!: Observable<HttpEvent<any>>;
+  _delete$!: Observable<number>;
+  _list$?: Observable<Employee[]>;
+  _listFiltered$!: Observable<Employee[]>;
+  _listFilteredWithActions$!: Observable<Employee[]>;
 
   _repo!: RepositoryService<Employee>;
   _menuButtons: IActionSheetButton[];
@@ -53,26 +53,37 @@ export class EmployeeListComponent implements OnInit {
     private router: Router,
     private modalCtrl: ModalController) {
 
-    addIcons({ ellipsisVerticalOutline });
+    addIcons({ ellipsisVerticalOutline, filterOutline });
     this._repo = this.repositoryServiceFactory.getInstance<Employee>(Employee);
 
-    //Reactive UI Setup
+    //user actions
     this._delete$ = this._deleteClick$.pipe(
-      switchMap(entity => this._repo.delete(entity.id))
-    );
+      switchMap(employee => this._repo.delete(employee.id).pipe(map(x => employee.id))));
+
+
     this._create$ = this._createClick$.pipe(
       switchMap(entity => this._repo.post(entity))
     )
-    this._update$ = this._createClick$.pipe(
-      switchMap(entity => this._repo.post(entity))
+    this._update$ = this._updateClick$.pipe(
+      switchMap(entity => this._repo.put(entity.id, entity))
     )
-    this._userAction$ = merge(this._create$, this._update$, this._delete$);
 
-    this._list$ = this._userAction$.pipe(
-      startWith(null),
-      switchMap(x => this._repo.get())
-    );
+    // list
+    this._list$ = this._repo.get();
 
+    // list filtered
+    this._listFiltered$ = combineLatest(
+      [this._filter$.pipe(startWith('')), this._list$])
+      .pipe(map(([filter, list]) => this.filterList(list, filter!)))
+
+    // list filtered + actions
+    this._listFilteredWithActions$ = combineLatest([this._listFiltered$, this._delete$.pipe(startWith(-1))])
+      .pipe(
+        switchMap(
+          ([list, deletedId]) => {
+            if (deletedId != -1) { list.splice(list.findIndex(x => x.id == deletedId), 1); }
+            return of(list);
+          }));
 
     this._menuButtons =
       [
@@ -131,6 +142,7 @@ export class EmployeeListComponent implements OnInit {
 
           //EDIT 
           case ActionSheetActionType.EDIT:
+            this._updateClick$.next(emp);
             this.router.navigateByUrl("employees/employee/" + emp.id);
             break;
         }
@@ -166,5 +178,36 @@ export class EmployeeListComponent implements OnInit {
       return true
     else
       return false;
+  }
+
+  /** filterDebounce
+   * @param event 
+   */
+  filterDebounce(event: ISearchbarCustomEvent<SearchbarInputEventDetail>) {
+    this._filter$.next(event.detail.value);
+  }
+
+  filterCancel() {
+    this._filter$.next(null);
+  }
+
+  filterList(list: any[] | null, value: string): any[] {
+
+    //validate params
+    if (value == "")
+      return list!;
+
+    if (list == null)
+      return [];
+
+    //search using json string
+    let _results: Employee[] = [];
+    let _value = ""
+    _results = list.filter(
+      (e) => JSON.stringify({ id: e.id, firstname: e.firstname, lastname: e.lastname })
+        .toLowerCase()
+        .includes(value.toLowerCase()));
+
+    return _results;
   }
 }

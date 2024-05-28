@@ -3,8 +3,13 @@
   <!--LIST-->
   <ion-content>
 
+    <div class="filter">
+      <ion-searchbar search-icon="filter-outline" [debounce]="1000" (ionCancel)=filterCancel()
+        (ionInput)=filterDebounce($event) placeholder=". . ."></ion-searchbar>
+    </div>
+
     <!--List Item-->
-    <ion-card *ngFor=" let e of _list$ | async">
+    <ion-card *ngFor=" let e of this._listFilteredWithActions$ | async">
 
       <!-- header -->
       <ion-card-header>

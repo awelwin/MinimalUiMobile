@@ -69,12 +69,12 @@ export class RepositoryService<T extends IEntity> {
     }
 
     /**
-     * Update resource
-     * @param resource resource instance to persist
-     */
-    public put(id: number): Observable<HttpEvent<any>> {
+   * Update resource
+   * @param resource resource instance to persist
+   */
+    public put(id: number, resource: T): Observable<HttpEvent<any>> {
         let url = this._serviceUri + this._resource + "/" + id;
-        return this._http.put<HttpEvent<any>>(url, this._resource, this.requestOptions);
+        return this._http.put<HttpEvent<any>>(url, resource, this.requestOptions);
     }
 
     /**
@@ -82,6 +82,7 @@ export class RepositoryService<T extends IEntity> {
      * @param id id of resource to delete
      */
     public delete(id: number): Observable<HttpEvent<any>> {
+
         let url = this._serviceUri + this._resource + "/" + id;
         return this._http.delete<HttpEvent<any>>(url, this.requestOptions);
     }

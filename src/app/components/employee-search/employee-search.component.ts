@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { EmployeeSearchQueryResult } from 'src/app/lib/EmployeeSearchQueryResult';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { QueryService } from 'src/app/services/QueryService';
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'search',
