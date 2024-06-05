@@ -33,7 +33,7 @@
             ],
             "styles": [
               "src/global.scss",
-              "src/theme/variables.scss"
+              "src/variables.scss"
             ],
             "scripts": []
           },
@@ -134,7 +134,7 @@
             ],
             "styles": [
               "src/global.scss",
-              "src/theme/variables.scss"
+              "src/variables.scss"
             ],
             "scripts": []
           },

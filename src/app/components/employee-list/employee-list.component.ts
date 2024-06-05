@@ -1,116 +1,64 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from 'src/app/lib/Employee';
-import { IActionSheetOptions } from 'src/app/lib/IActionSheetOptions';
-import { IActionSheetButton, Role } from 'src/app/lib/IActionSheetButton';
-import { RepositoryService } from 'src/app/services/RepositoryService';
+import { Employee } from 'src/app/common/dto/Employee';
 import { NgFor } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs/internal/Observable';
-import { RepositoryServiceFactory } from 'src/app/services/RepositoryServiceFactory';
-import { IonCard, IonBadge, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonContent, IonItem, IonLabel, IonText, IonToolbar, IonButton, IonIcon, IonActionSheet, IonSearchbar } from "@ionic/angular/standalone";
+import { IonCard, IonBadge, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonContent, IonItem, IonLabel, IonText, IonToolbar, IonButton, IonIcon, IonActionSheet, IonSearchbar, IonModal, IonList } from "@ionic/angular/standalone";
 import { DatePipe } from '@angular/common';
 import { ellipsisVerticalOutline, filterOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-import { ActionSheetController, ModalController, SearchbarInputEventDetail } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core';
-import { ActionSheetActionType } from 'src/app/lib/ActionSheetActionType';
-import { ISearchbarCustomEvent } from 'src/app/lib/ISearchbarCustomEvent'
-import { Router } from '@angular/router';
-import { YesNoActionComponent } from '../modal/yes-no-action.component';
-import { ModalAction } from '../modal/ModalAction';
-import { ActionType } from 'src/app/lib/ActionType';
-import { ModalRole } from '../modal/ModalRole';
-import { Subject, combineLatest, map, of, startWith, switchMap, } from 'rxjs';
-import { HttpEvent } from '@angular/common/http';
+import { SearchbarInputEventDetail } from '@ionic/angular';
+import { ISearchbarCustomEvent } from 'src/app/common/ISearchbarCustomEvent'
+import { Subject } from 'rxjs';
+import { Store } from '@ngrx/store'
+import { IAppState } from 'src/app/Infrastructure/state management/store/AppState';
+import { StoreActionTypes } from 'src/app/Infrastructure/state management/store/StoreActionTypes';
+import { selectEmployeeList, selectEmployeeList_ActionSheetEntity, selectEmployeeList_ActionSheetIsOpen, selectEmployeeList_Count, selectEmployeeList_Filtered, selectEmployeeList_ModalEntity, selectEmployeeList_ModalIsOpen } from 'src/app/Infrastructure/state management/store/EmployeeListSelectors';
+import { JsonPipe } from '@angular/common';
+import { EntityOperation } from 'src/app/common/EntityOperation';
+import { IActionSheetButton } from 'src/app/common/IActionSheetButton';
+import { ConfirmDeleteModalComponent } from '../modal/confirm-delete-modal.component';
 
 @Component({
   selector: 'employee-list',
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss'],
   standalone: true,
-  imports: [IonSearchbar, IonActionSheet, IonIcon, IonButton, IonToolbar, IonText, IonLabel, IonItem, IonContent, IonBadge, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, NgFor, AsyncPipe, DatePipe,]
+  imports: [ConfirmDeleteModalComponent, IonList, IonModal, JsonPipe, IonSearchbar, IonActionSheet, IonIcon, IonButton, IonToolbar, IonText, IonLabel, IonItem, IonContent, IonBadge, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, NgFor, AsyncPipe, DatePipe,]
 })
 export class EmployeeListComponent implements OnInit {
 
   _filter$ = new Subject<string | undefined | null>;
-  _createClick$ = new Subject<Employee>;
-  _updateClick$ = new Subject<Employee>;
-  _deleteClick$ = new Subject<Employee>;
-  _create$!: Observable<Employee>;
-  _update$!: Observable<HttpEvent<any>>;
-  _delete$!: Observable<number>;
-  _list$?: Observable<Employee[]>;
+  _list$!: Observable<Employee[]>;
+  _listCount$!: Observable<number>;
   _listFiltered$!: Observable<Employee[]>;
-  _listFilteredWithActions$!: Observable<Employee[]>;
+  _actionSheetIsOpen$!: Observable<boolean>;
+  _actionSheetEntity$!: Observable<Employee>;
+  _actionSheetButtons: IActionSheetButton[];
+  _modalIsOpen$!: Observable<boolean>;
+  _modalEntity$!: Observable<Employee>;
 
-  _repo!: RepositoryService<Employee>;
-  _menuButtons: IActionSheetButton[];
-  _menuOptions!: IActionSheetOptions;
+  constructor(private store: Store<IAppState>) {
 
-  constructor(
-    private repositoryServiceFactory: RepositoryServiceFactory,
-    private menuActionSheet: ActionSheetController,
-    private router: Router,
-    private modalCtrl: ModalController) {
+    //list
+    this._list$ = store.select(selectEmployeeList);
+    this._listCount$ = store.select(selectEmployeeList_Count);
+    this._listFiltered$ = store.select(selectEmployeeList_Filtered);
+    this._actionSheetIsOpen$ = store.select(selectEmployeeList_ActionSheetIsOpen);
+    this._modalIsOpen$ = store.select(selectEmployeeList_ModalIsOpen);
 
+    store.dispatch({ type: StoreActionTypes.EmployeeList_Load });
+
+    //icons 
     addIcons({ ellipsisVerticalOutline, filterOutline });
-    this._repo = this.repositoryServiceFactory.getInstance<Employee>(Employee);
 
-    //user actions
-    this._delete$ = this._deleteClick$.pipe(
-      switchMap(employee => this._repo.delete(employee.id).pipe(map(x => employee.id))));
+    //actionsheet
+    this._actionSheetButtons = [
+      { text: "delete", cssClass: "", data: EntityOperation.DeleteRequest },
+      { text: "edit", cssClass: "", data: EntityOperation.Update },
+      { text: "cancel", cssClass: "", data: "" }
+    ];
 
-
-    this._create$ = this._createClick$.pipe(
-      switchMap(entity => this._repo.post(entity))
-    )
-    this._update$ = this._updateClick$.pipe(
-      switchMap(entity => this._repo.put(entity.id, entity))
-    )
-
-    // list
-    this._list$ = this._repo.get();
-
-    // list filtered
-    this._listFiltered$ = combineLatest(
-      [this._filter$.pipe(startWith('')), this._list$])
-      .pipe(map(([filter, list]) => this.filterList(list, filter!)))
-
-    // list filtered + actions
-    this._listFilteredWithActions$ = combineLatest([this._listFiltered$, this._delete$.pipe(startWith(-1))])
-      .pipe(
-        switchMap(
-          ([list, deletedId]) => {
-            if (deletedId != -1) { list.splice(list.findIndex(x => x.id == deletedId), 1); }
-            return of(list);
-          }));
-
-    this._menuButtons =
-      [
-        {
-          text: 'Delete',
-          role: Role.DESTRUCTIVE,
-          data: {
-            action: 'delete',
-          },
-          cssClass: 'action-sheet-button-delete'
-        },
-        {
-          text: 'Edit',
-          data: {
-            action: 'edit',
-          },
-          cssClass: 'action-sheet-button-cancel'
-        },
-        {
-          text: 'Cancel',
-          role: Role.CANCEL,
-          data: {
-            action: 'cancel',
-          },
-          cssClass: 'action-sheet-button-cancel'
-        },
-      ];
   }
 
   ngOnInit() { }
@@ -119,95 +67,46 @@ export class EmployeeListComponent implements OnInit {
    * Employee
    * @param employee
    */
-  async openMenu(emp: Employee) {
-
-    //create ActionSheet
-    const actionSheet = await this.menuActionSheet.create({ buttons: this._menuButtons, });
-    actionSheet.present();
-
-    //Subscribe Actionsheet
-    actionSheet.onDidDismiss()
-      .then((x: OverlayEventDetail<any>) => {
-
-        switch (x.data?.action) {
-
-          //DELETE 
-          case ActionSheetActionType.DELETE:
-            this.confirmDelete(emp).then((result) => {
-              if (result) {
-                this._deleteClick$.next(emp);
-              }
-            });
-            break;
-
-          //EDIT 
-          case ActionSheetActionType.EDIT:
-            this._updateClick$.next(emp);
-            this.router.navigateByUrl("employees/employee/" + emp.id);
-            break;
-        }
-      })
-  }
-
-  /**
-   * Confirm Delete using Modal
-   * @param emp 
-   */
-  async confirmDelete(emp: Employee): Promise<boolean> {
-
-    let confirmed: boolean = false;
-
-    //input
-    let action = <ModalAction<Employee>>({
-      payload: emp,
-      actionType: ActionType.Delete,
-      title: 'confirm delete',
-      message: 'warning. This operation cannot be undone. Continue?'
-    });
-
-    //create modal 
-    const modalInstance = await this.modalCtrl.create({
-      component: YesNoActionComponent<Employee>,
-      componentProps: { 'action': action }
-    });
-    modalInstance.present();
-
-    //subscribe result
-    let result: OverlayEventDetail<any> = await modalInstance.onWillDismiss()
-    if (result.role === ModalRole.CONFIRM)
-      return true
-    else
-      return false;
+  async openActionSheet(emp: Employee) {
+    this.store.dispatch({ type: StoreActionTypes.EmployeeList_OpenActionSheet, payload: emp });
   }
 
   /** filterDebounce
    * @param event 
    */
   filterDebounce(event: ISearchbarCustomEvent<SearchbarInputEventDetail>) {
-    this._filter$.next(event.detail.value);
+    this.store.dispatch({ type: StoreActionTypes.EmployeeList_Filter, payload: event.detail.value });
   }
 
+  /*
+  FilterCancel
+   */
   filterCancel() {
-    this._filter$.next(null);
+    this.store.dispatch({ type: StoreActionTypes.EmployeeList_Filter, payload: "" });
   }
 
-  filterList(list: any[] | null, value: string): any[] {
+  /*
+  actionSheetDismiss
+   */
+  actionSheetDismiss(ev: any) {
 
-    //validate params
-    if (value == "")
-      return list!;
+    //close sheet
+    this.store.dispatch({ type: StoreActionTypes.EmployeeList_ActionSheetClose });
 
-    if (list == null)
-      return [];
+    if (ev.detail.data !== null && ev.detail.data !== "") //NOT cancel or backdrop clicked
+      switch (ev.detail.data) {
+        case EntityOperation.DeleteRequest:
+          this.store.dispatch({ type: StoreActionTypes.EmployeeList_DeleteRequest }); break;
+        case EntityOperation.Update:
+          break;
+      }
+  }
 
-    //search using json string
-    let _results: Employee[] = [];
-    let _value = ""
-    _results = list.filter(
-      (e) => JSON.stringify({ id: e.id, firstname: e.firstname, lastname: e.lastname })
-        .toLowerCase()
-        .includes(value.toLowerCase()));
-
-    return _results;
+  /**
+   * ModalDismiss
+   * @param ev IModalCustomEvent< OverlayEventDetail<any> > event payload
+   */
+  modalDismiss(ev: any) {
+    this.store.dispatch({ type: StoreActionTypes.EmployeeList_ModalDismiss });
   }
 }

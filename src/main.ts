@@ -1,14 +1,21 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, importProvidersFrom, isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, Router, provideRouter } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-import { routes } from './app/ROUTING';
-import { AppComponent } from './app/app.component';
+import { AppComponent } from './app/components/app/app.component';
 import { environment } from './environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { QueryService } from './app/services/QueryService';
-import { RepositoryServiceFactory } from './app/services/RepositoryServiceFactory';
+import { QueryService } from './app/Infrastructure/QueryService';
+import { RepositoryServiceFactory } from './app/Infrastructure/RepositoryServiceFactory';
 import { ModalController } from '@ionic/angular';
+import { provideStore } from '@ngrx/store';
+import { EmployeeListReducer } from './app/Infrastructure/state management/store/EmployeeListReducers';
+import { RouteConfig } from '../src/app/Infrastructure/Routes';
+import { EmployeeListEffects } from './app/Infrastructure/state management/effects/EmployeeListEffects';
+import { provideEffects } from '@ngrx/effects';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+
+
 
 //Factory methods
 export function getRepositoryServiceFactory(http: HttpClient) {
@@ -31,6 +38,9 @@ bootstrapApplication(AppComponent, {
     { provide: QueryService, useFactory: QueryServiceFactory, deps: [HttpClient] },
     { provide: RepositoryServiceFactory, useFactory: getRepositoryServiceFactory, deps: [HttpClient] },
     provideIonicAngular(),
-    provideRouter(routes),
+    provideRouter(RouteConfig),
+    provideStore({ EmployeeList: EmployeeListReducer }),
+    provideEffects(EmployeeListEffects),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
   ],
 });

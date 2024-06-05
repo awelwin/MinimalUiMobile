@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { IonMenuToggle, IonToolbar, IonTitle, IonContent, IonMenu, IonHeader, IonButtons, IonMenuButton, IonFooter, IonList, IonItem, IonLabel, IonIcon, IonButton, IonApp } from '@ionic/angular/standalone';
-import { EmployeesComponent } from './components/employees/employees.component';
+import { EmployeesComponent } from '../employees/employees.component';
 import { personOutline, people, callOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router';
-
+import { EmployeeListReducer } from 'src/app/Infrastructure/state management/store/EmployeeListReducers';
+import { StoreModule } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router'
     EmployeesComponent,
     IonMenuButton,
     IonMenuToggle,
-    RouterModule, RouterLink, RouterOutlet],
+    RouterModule, RouterLink, RouterOutlet
+  ],
 })
 export class AppComponent {
 

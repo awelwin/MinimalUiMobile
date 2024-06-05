@@ -7,9 +7,9 @@
       <ion-searchbar search-icon="filter-outline" [debounce]="1000" (ionCancel)=filterCancel()
         (ionInput)=filterDebounce($event) placeholder=". . ."></ion-searchbar>
     </div>
-
+    {{this._listCount$ | async}}
     <!--List Item-->
-    <ion-card *ngFor=" let e of this._listFilteredWithActions$ | async">
+    <ion-card *ngFor=" let e of this._listFiltered$ | async">
 
       <!-- header -->
       <ion-card-header>
@@ -21,7 +21,7 @@
 
           <!--Menu-->
           <div class="menu">
-            <ion-button fill="clear" class="menu-button" (click)="openMenu(e)">
+            <ion-button fill="clear" class="menu-button" (click)="openActionSheet(e)">
               <ion-icon name="ellipsis-vertical-outline" class="menu-button"></ion-icon>
             </ion-button>
           </div>
@@ -41,6 +41,20 @@
         Age {{e.age}} | {{e.created | date: "MMM d,y"}}
       </ion-card-content>
     </ion-card>
-  </ion-content>
 
+
+    <!--MODAL-->
+    <ion-modal id="modal" [isOpen]="_modalIsOpen$! | async" (willDismiss)="modalDismiss($event)">
+      <ng-template>
+        <confirm-delete></confirm-delete>
+      </ng-template>
+    </ion-modal>
+
+  </ion-content>
 </div>
+
+<!--Actionsheet menu-->
+<ion-action-sheet [isOpen]="_actionSheetIsOpen$ | async" header="Actions" [buttons]="_actionSheetButtons"
+  (willDismiss)="actionSheetDismiss($event)">
+
+</ion-action-sheet>

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { RepositoryService } from "./RepositoryService";
-import { IEntity } from "../lib/IEntity";
+import { IEntity } from "../common/dto/IEntity";
 
 /**
  NOTE: Factory created due to limitations with typescript generics.
@@ -21,7 +21,6 @@ export class RepositoryServiceFactory {
         //one service instance for one distince rest resource
         let existing = this.singletonInstances.find(x => x._resource === resourceName);
         if (existing != null) {
-            console.log('existing instance found for ' + resourceName)
             return existing;
         }
         else {

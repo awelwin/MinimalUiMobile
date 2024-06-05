@@ -1,0 +1,19 @@
+<div *ngIf="this._employee$ | async as employee" class="wrapper">
+
+    <!--Head-->
+    <div class="modal-header border-0">
+        <h4 class="border-none">confirm delete</h4>
+    </div>
+    <!--Body-->
+    <div>
+        <p>warning. This operation cannot be undone. Continue</p>
+    </div>
+
+    <!--Foot-->
+    <div>
+        <ion-button class="" (click)=confirm(employee)>accept</ion-button>
+        <ion-button class="" (click)=cancel() data="cancel" role="cancel">cancel</ion-button>
+
+    </div>
+
+</div>

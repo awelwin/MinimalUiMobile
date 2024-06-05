@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { EmployeeSearchQueryResult } from "../lib/EmployeeSearchQueryResult";
+import { EmployeeSearchQueryResult } from "../common/dto/EmployeeSearchQueryResult";
 import { HttpClient } from "@angular/common/http";
 
 export class QueryService {
