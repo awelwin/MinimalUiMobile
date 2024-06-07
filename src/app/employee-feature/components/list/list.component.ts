@@ -55,9 +55,9 @@ export class ListComponent implements OnInit {
 
     //actionsheet
     this._actionSheetButtons = [
-      { text: "delete", cssClass: "", data: EntityOperation.DeleteRequest },
-      { text: "edit", cssClass: "", data: EntityOperation.Update },
-      { text: "cancel", cssClass: "", data: "" }
+      { text: "delete", cssClass: "action-sheet-button-delete", data: EntityOperation.DeleteRequest },
+      { text: "edit", cssClass: "action-sheet-button-default", data: EntityOperation.Update },
+      { text: "cancel", cssClass: "action-sheet-button-default", data: "" }
     ];
 
   }
