@@ -1,13 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import { Employee } from 'src/app/common/dto/Employee';
-import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction } from './StoreActions';
+import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction } from './EmployeeList_Actions';
 import { INITIAL_APP_STATE } from './AppState';
 
 /**
  * REDUCER for Emplmoyee-List slice
  */
 
-const initialState = INITIAL_APP_STATE.EmployeeList;
+const initialState = INITIAL_APP_STATE.employeeFeature.list;
 
 export const EmployeeListReducer = createReducer(
     initialState,

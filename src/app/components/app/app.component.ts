@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { IonMenuToggle, IonToolbar, IonTitle, IonContent, IonMenu, IonHeader, IonButtons, IonMenuButton, IonFooter, IonList, IonItem, IonLabel, IonIcon, IonButton, IonApp } from '@ionic/angular/standalone';
-import { EmployeesComponent } from '../employees/employees.component';
+import { EmployeeFeatureComponent } from '../employee-feature/employee-feature.component';
 import { personOutline, people, callOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router';
-import { EmployeeListReducer } from 'src/app/Infrastructure/state management/store/EmployeeListReducers';
+import { EmployeeListReducer } from 'src/app/Infrastructure/ngrx/EmployeeList_Reducers';
 import { StoreModule } from '@ngrx/store';
 
 @Component({
@@ -20,7 +20,7 @@ import { StoreModule } from '@ngrx/store';
     IonTitle,
     IonToolbar,
     IonMenu,
-    EmployeesComponent,
+    EmployeeFeatureComponent,
     IonMenuButton,
     IonMenuToggle,
     RouterModule, RouterLink, RouterOutlet

@@ -81,6 +81,6 @@ export class EmployeeSearchComponent implements OnInit {
     this._searchNoResult = false;
 
     //route to employee
-    this.router.navigate(['/employees/employee', id],)
+    this.router.navigate(['/employee-feature/employee', id],)
   }
 }

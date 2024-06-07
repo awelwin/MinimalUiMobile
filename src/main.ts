@@ -9,11 +9,12 @@ import { QueryService } from './app/Infrastructure/QueryService';
 import { RepositoryServiceFactory } from './app/Infrastructure/RepositoryServiceFactory';
 import { ModalController } from '@ionic/angular';
 import { provideStore } from '@ngrx/store';
-import { EmployeeListReducer } from './app/Infrastructure/state management/store/EmployeeListReducers';
-import { RouteConfig } from '../src/app/Infrastructure/Routes';
-import { EmployeeListEffects } from './app/Infrastructure/state management/effects/EmployeeListEffects';
+import { EmployeeListReducer } from './app/Infrastructure/ngrx/EmployeeList_Reducers';
+import { RouteConfig } from './ROUTES';
+import { EmployeeListEffects } from './app/Infrastructure/ngrx/EmployeeList_Effects';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { getRouterSelectors, provideRouterStore, routerReducer } from '@ngrx/router-store';
 
 
 
@@ -31,16 +32,29 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+
+    //ionic
     importProvidersFrom(HttpClientModule),
-    Router,
     ModalController,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideIonicAngular(),
+
+    //services
     { provide: QueryService, useFactory: QueryServiceFactory, deps: [HttpClient] },
     { provide: RepositoryServiceFactory, useFactory: getRepositoryServiceFactory, deps: [HttpClient] },
-    provideIonicAngular(),
+
+    //router
     provideRouter(RouteConfig),
-    provideStore({ EmployeeList: EmployeeListReducer }),
+    Router,
+
+    // ngrx state management
+    provideStore({
+      EmployeeList: EmployeeListReducer,
+      router: routerReducer
+    }),
+    provideRouterStore(),
     provideEffects(EmployeeListEffects),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+
   ],
 });

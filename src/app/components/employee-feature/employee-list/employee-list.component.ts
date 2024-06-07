@@ -11,13 +11,14 @@ import { SearchbarInputEventDetail } from '@ionic/angular';
 import { ISearchbarCustomEvent } from 'src/app/common/ISearchbarCustomEvent'
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store'
-import { IAppState } from 'src/app/Infrastructure/state management/store/AppState';
-import { StoreActionTypes } from 'src/app/Infrastructure/state management/store/StoreActionTypes';
-import { selectEmployeeList, selectEmployeeList_ActionSheetEntity, selectEmployeeList_ActionSheetIsOpen, selectEmployeeList_Count, selectEmployeeList_Filtered, selectEmployeeList_ModalEntity, selectEmployeeList_ModalIsOpen } from 'src/app/Infrastructure/state management/store/EmployeeListSelectors';
+import { IAppState } from 'src/app/Infrastructure/ngrx/AppState';
+import { StoreActionTypes } from 'src/app/Infrastructure/ngrx/StoreActionTypes';
+import { selectEmployeeList, selectEmployeeList_ActionSheetEntity, selectEmployeeList_ActionSheetIsOpen, selectEmployeeList_Count, selectEmployeeList_Filtered, selectEmployeeList_ModalEntity, selectEmployeeList_ModalIsOpen } from 'src/app/Infrastructure/ngrx/EmployeeList_Selectors';
 import { JsonPipe } from '@angular/common';
 import { EntityOperation } from 'src/app/common/EntityOperation';
 import { IActionSheetButton } from 'src/app/common/IActionSheetButton';
-import { ConfirmDeleteModalComponent } from '../modal/confirm-delete-modal.component';
+import { ConfirmDeleteModalComponent } from '../../modal/confirm-delete-modal.component';
+import { RouterReducerState, getRouterSelectors } from '@ngrx/router-store';
 
 @Component({
   selector: 'employee-list',
@@ -37,6 +38,7 @@ export class EmployeeListComponent implements OnInit {
   _actionSheetButtons: IActionSheetButton[];
   _modalIsOpen$!: Observable<boolean>;
   _modalEntity$!: Observable<Employee>;
+
 
   constructor(private store: Store<IAppState>) {
 

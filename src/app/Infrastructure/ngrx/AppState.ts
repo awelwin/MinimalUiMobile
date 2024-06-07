@@ -1,8 +1,8 @@
 
-import { IActionSheetButton } from "src/app/common/IActionSheetButton";
 import { Employee } from "src/app/common/dto/Employee";
 import { EmployeeSearchQueryResult } from "src/app/common/dto/EmployeeSearchQueryResult";
 import { IEntity } from "src/app/common/dto/IEntity";
+import { RouterReducerState } from '@ngrx/router-store';
 
 export interface IActionSheet<T extends IEntity> {
     isOpen: boolean,
@@ -19,18 +19,27 @@ export interface IEmployeeList {
     actionSheet: IActionSheet<Employee>
     modal: IModal<Employee>
 }
+export interface IEmployeeFeature {
+    list: IEmployeeList;
+    searchResults: EmployeeSearchQueryResult[];
+}
 
 export interface IAppState {
-    EmployeeList: IEmployeeList;
-    EmployeeSearchResults: EmployeeSearchQueryResult[];
+    router: RouterReducerState;
+    employeeFeature: IEmployeeFeature;
+
 }
 export const INITIAL_APP_STATE: IAppState = {
-    EmployeeList:
+    router: null!,
+    employeeFeature:
     {
-        list: [],
-        listFiltered: [],
-        actionSheet: { isOpen: false, entity: null! },
-        modal: { isOpen: false, entity: null! }
-    },
-    EmployeeSearchResults: []
+        list:
+        {
+            list: [],
+            listFiltered: [],
+            actionSheet: { isOpen: false, entity: null! },
+            modal: { isOpen: false, entity: null! }
+        },
+        searchResults: []
+    }
 }

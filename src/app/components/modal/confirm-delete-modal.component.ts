@@ -5,9 +5,9 @@ import { IonButton } from "@ionic/angular/standalone";
 import { ModalController } from '@ionic/angular';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/Infrastructure/state management/store/AppState';
-import { StoreActionTypes } from 'src/app/Infrastructure/state management/store/StoreActionTypes';
-import { selectEmployeeList_ModalEntity } from 'src/app/Infrastructure/state management/store/EmployeeListSelectors';
+import { IAppState } from 'src/app/Infrastructure/ngrx/AppState';
+import { StoreActionTypes } from 'src/app/Infrastructure/ngrx/StoreActionTypes';
+import { selectEmployeeList_ModalEntity } from 'src/app/Infrastructure/ngrx/EmployeeList_Selectors';
 import { Employee } from 'src/app/common/dto/Employee';
 import { Observable } from 'rxjs';
 

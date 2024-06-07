@@ -7,8 +7,8 @@ import { RouterOutlet, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'employee',
-  templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.scss'],
+  templateUrl: './employee-feature.component.html',
+  styleUrls: ['./employee-feature.component.scss'],
   standalone: true,
   imports: [IonTabButton, IonTabBar, IonTabs, IonButtons, IonButton, IonRow, IonGrid, IonCol, IonHeader, IonIcon,
     IonTitle,
@@ -19,7 +19,7 @@ import { RouterOutlet, RouterModule } from '@angular/router';
 
   ]
 })
-export class EmployeesComponent implements OnInit {
+export class EmployeeFeatureComponent implements OnInit {
 
   constructor() {
     addIcons({ searchOutline, listOutline, homeOutline })
