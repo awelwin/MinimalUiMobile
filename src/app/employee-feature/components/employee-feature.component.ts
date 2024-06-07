@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { RouterOutlet, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'employee',
+  selector: 'employee-feature',
   templateUrl: './employee-feature.component.html',
   styleUrls: ['./employee-feature.component.scss'],
   standalone: true,

@@ -33,7 +33,7 @@ export class AppComponent {
     addIcons({ personOutline, people, callOutline })
   }
   public navigateToEmployees() {
-    this.router.navigate(["/employees"]);
+    this.router.navigate(["/employee-feature"]);
   }
 
 }

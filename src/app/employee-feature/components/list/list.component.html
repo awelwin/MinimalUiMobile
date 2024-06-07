@@ -54,7 +54,7 @@
 </div>
 
 <!--Actionsheet menu-->
-<ion-action-sheet [isOpen]="_actionSheetIsOpen$ | async" header="Actions" [buttons]="_actionSheetButtons"
+<ion-action-sheet [isOpen]="_actionSheetIsOpen$ | async" [buttons]="_actionSheetButtons"
   (willDismiss)="actionSheetDismiss($event)">
 
 </ion-action-sheet>

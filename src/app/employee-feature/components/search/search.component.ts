@@ -8,13 +8,13 @@ import { QueryService } from 'src/app/common/service/QueryService';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'search',
-  templateUrl: './employee-search.component.html',
-  styleUrls: ['./employee-search.component.scss'],
+  selector: 'employee-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss'],
   imports: [IonNote, IonIcon, IonLabel, IonItem, IonList, IonContent, IonSearchbar, IonContent, NgIf, NgFor],
   standalone: true
 })
-export class EmployeeSearchComponent implements OnInit {
+export class SearchComponent implements OnInit {
 
   public _search: string = "";
   public _searchResults: EmployeeSearchQueryResult[] = [];

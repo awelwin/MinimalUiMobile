@@ -17,16 +17,16 @@ import { list, actionSheetEntity, actionSheetIsOpen, count, filtered, modalEntit
 import { JsonPipe } from '@angular/common';
 import { EntityOperation } from 'src/app/employee-feature/lib/EntityOperation';
 import { IActionSheetButton } from 'src/app/common/ionic/IActionSheetButton';
-import { ConfirmDeleteModalComponent } from './confirm-delete-modal.component';
+import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 
 @Component({
   selector: 'employee-list',
-  templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.scss'],
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
   standalone: true,
   imports: [ConfirmDeleteModalComponent, IonList, IonModal, JsonPipe, IonSearchbar, IonActionSheet, IonIcon, IonButton, IonToolbar, IonText, IonLabel, IonItem, IonContent, IonBadge, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, NgFor, AsyncPipe, DatePipe,]
 })
-export class EmployeeListComponent implements OnInit {
+export class ListComponent implements OnInit {
 
   _filter$ = new Subject<string | undefined | null>;
   _list$!: Observable<Employee[]>;
