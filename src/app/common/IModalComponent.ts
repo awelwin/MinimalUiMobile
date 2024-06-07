@@ -1,5 +1,5 @@
 
-import { IEntity } from "../../common/dto/IEntity";
+import { IEntity } from "./dto/IEntity";
 
 /**
  * ModalComponent - components placed inside a modal window

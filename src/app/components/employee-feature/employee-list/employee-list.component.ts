@@ -11,14 +11,13 @@ import { SearchbarInputEventDetail } from '@ionic/angular';
 import { ISearchbarCustomEvent } from 'src/app/common/ISearchbarCustomEvent'
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store'
-import { IAppState } from 'src/app/Infrastructure/ngrx/AppState';
-import { StoreActionTypes } from 'src/app/Infrastructure/ngrx/StoreActionTypes';
-import { selectEmployeeList, selectEmployeeList_ActionSheetEntity, selectEmployeeList_ActionSheetIsOpen, selectEmployeeList_Count, selectEmployeeList_Filtered, selectEmployeeList_ModalEntity, selectEmployeeList_ModalIsOpen } from 'src/app/Infrastructure/ngrx/EmployeeList_Selectors';
+import { IEmployeeFeatureState } from 'src/app/Infrastructure/ngrx/employee-feature/state';
+import { EmployeeFeatureAction } from 'src/app/Infrastructure/ngrx/employee-feature/actions';
+import { list, actionSheetEntity, actionSheetIsOpen, count, filtered, modalEntity, modalIsOpen } from 'src/app/Infrastructure/ngrx/employee-feature/selectors';
 import { JsonPipe } from '@angular/common';
 import { EntityOperation } from 'src/app/common/EntityOperation';
 import { IActionSheetButton } from 'src/app/common/IActionSheetButton';
-import { ConfirmDeleteModalComponent } from '../../modal/confirm-delete-modal.component';
-import { RouterReducerState, getRouterSelectors } from '@ngrx/router-store';
+import { ConfirmDeleteModalComponent } from './confirm-delete-modal.component';
 
 @Component({
   selector: 'employee-list',
@@ -40,16 +39,16 @@ export class EmployeeListComponent implements OnInit {
   _modalEntity$!: Observable<Employee>;
 
 
-  constructor(private store: Store<IAppState>) {
+  constructor(private store: Store<IEmployeeFeatureState>) {
 
     //list
-    this._list$ = store.select(selectEmployeeList);
-    this._listCount$ = store.select(selectEmployeeList_Count);
-    this._listFiltered$ = store.select(selectEmployeeList_Filtered);
-    this._actionSheetIsOpen$ = store.select(selectEmployeeList_ActionSheetIsOpen);
-    this._modalIsOpen$ = store.select(selectEmployeeList_ModalIsOpen);
+    this._list$ = store.select(list);
+    this._listCount$ = store.select(count);
+    this._listFiltered$ = store.select(filtered);
+    this._actionSheetIsOpen$ = store.select(actionSheetIsOpen);
+    this._modalIsOpen$ = store.select(modalIsOpen);
 
-    store.dispatch({ type: StoreActionTypes.EmployeeList_Load });
+    store.dispatch({ type: EmployeeFeatureAction.Load });
 
     //icons 
     addIcons({ ellipsisVerticalOutline, filterOutline });
@@ -70,21 +69,21 @@ export class EmployeeListComponent implements OnInit {
    * @param employee
    */
   async openActionSheet(emp: Employee) {
-    this.store.dispatch({ type: StoreActionTypes.EmployeeList_OpenActionSheet, payload: emp });
+    this.store.dispatch({ type: EmployeeFeatureAction.OpenActionSheet, payload: emp });
   }
 
   /** filterDebounce
    * @param event 
    */
   filterDebounce(event: ISearchbarCustomEvent<SearchbarInputEventDetail>) {
-    this.store.dispatch({ type: StoreActionTypes.EmployeeList_Filter, payload: event.detail.value });
+    this.store.dispatch({ type: EmployeeFeatureAction.Filter, payload: event.detail.value });
   }
 
   /*
   FilterCancel
    */
   filterCancel() {
-    this.store.dispatch({ type: StoreActionTypes.EmployeeList_Filter, payload: "" });
+    this.store.dispatch({ type: EmployeeFeatureAction.Filter, payload: "" });
   }
 
   /*
@@ -93,13 +92,14 @@ export class EmployeeListComponent implements OnInit {
   actionSheetDismiss(ev: any) {
 
     //close sheet
-    this.store.dispatch({ type: StoreActionTypes.EmployeeList_ActionSheetClose });
+    this.store.dispatch({ type: EmployeeFeatureAction.ActionSheetClose });
 
     if (ev.detail.data !== null && ev.detail.data !== "") //NOT cancel or backdrop clicked
       switch (ev.detail.data) {
         case EntityOperation.DeleteRequest:
-          this.store.dispatch({ type: StoreActionTypes.EmployeeList_DeleteRequest }); break;
+          this.store.dispatch({ type: EmployeeFeatureAction.DeleteRequest }); break;
         case EntityOperation.Update:
+          this.store.dispatch({ type: EmployeeFeatureAction.EditRequest });
           break;
       }
   }
@@ -109,6 +109,6 @@ export class EmployeeListComponent implements OnInit {
    * @param ev IModalCustomEvent< OverlayEventDetail<any> > event payload
    */
   modalDismiss(ev: any) {
-    this.store.dispatch({ type: StoreActionTypes.EmployeeList_ModalDismiss });
+    this.store.dispatch({ type: EmployeeFeatureAction.ModalDismiss });
   }
 }

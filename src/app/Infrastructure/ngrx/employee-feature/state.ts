@@ -19,27 +19,23 @@ export interface IEmployeeList {
     actionSheet: IActionSheet<Employee>
     modal: IModal<Employee>
 }
-export interface IEmployeeFeature {
+export interface IEmployeeFeatureState {
+    router: RouterReducerState;
     list: IEmployeeList;
     searchResults: EmployeeSearchQueryResult[];
+    employee: Employee;
 }
 
-export interface IAppState {
-    router: RouterReducerState;
-    employeeFeature: IEmployeeFeature;
+export const INITIAL_STATE: IEmployeeFeatureState = {
 
-}
-export const INITIAL_APP_STATE: IAppState = {
     router: null!,
-    employeeFeature:
+    list:
     {
-        list:
-        {
-            list: [],
-            listFiltered: [],
-            actionSheet: { isOpen: false, entity: null! },
-            modal: { isOpen: false, entity: null! }
-        },
-        searchResults: []
-    }
+        list: [],
+        listFiltered: [],
+        actionSheet: { isOpen: false, entity: null! },
+        modal: { isOpen: false, entity: null! }
+    },
+    searchResults: [],
+    employee: null!
 }

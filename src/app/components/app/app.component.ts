@@ -4,8 +4,6 @@ import { EmployeeFeatureComponent } from '../employee-feature/employee-feature.c
 import { personOutline, people, callOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router';
-import { EmployeeListReducer } from 'src/app/Infrastructure/ngrx/EmployeeList_Reducers';
-import { StoreModule } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',

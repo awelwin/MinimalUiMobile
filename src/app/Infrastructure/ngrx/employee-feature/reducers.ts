@@ -1,16 +1,23 @@
 import { createReducer, on } from '@ngrx/store';
 import { Employee } from 'src/app/common/dto/Employee';
-import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction } from './EmployeeList_Actions';
-import { INITIAL_APP_STATE } from './AppState';
+import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeList_EditRequestAction } from './actions';
+import { INITIAL_STATE } from './state';
 
 /**
- * REDUCER for Emplmoyee-List slice
+ * EMPLOYEE
  */
 
-const initialState = INITIAL_APP_STATE.employeeFeature.list;
+export const employeeReducer = createReducer(
+    INITIAL_STATE.employee,
 
-export const EmployeeListReducer = createReducer(
-    initialState,
+);
+
+/**
+ * EMPLOYEE-LIST
+ */
+
+export const employeeListReducer = createReducer(
+    INITIAL_STATE.list,
 
     //load
     on(employeeList_LoadResultAction, (state, action) => ({
@@ -27,6 +34,7 @@ export const EmployeeListReducer = createReducer(
             entity: state.actionSheet.entity
         }
     })),
+
     on(employeeList_ModalDismissAction,
         employeeList_DeleteRequestConfirmedAction, (state, action) => ({
             ...state,
