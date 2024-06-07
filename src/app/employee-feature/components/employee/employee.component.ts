@@ -1,9 +1,9 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
-import { IEmployeeFeatureState } from 'src/app/Infrastructure/ngrx/employee-feature/state';
+import { IEmployeeFeatureState } from 'src/app/employee-feature/ngrx/state';
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs';
-import { employee } from 'src/app/Infrastructure/ngrx/employee-feature/selectors';
-import { Employee } from 'src/app/common/dto/Employee';
+import { employee } from 'src/app/employee-feature/ngrx/selectors';
+import { Employee } from 'src/app/employee-feature/lib/Employee';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 
 @Component({

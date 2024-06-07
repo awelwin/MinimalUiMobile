@@ -1,7 +1,7 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { RepositoryServiceFactory } from '../../RepositoryServiceFactory'
-import { RepositoryService } from '../../RepositoryService';
-import { Employee } from '../../../common/dto/Employee';
+import { RepositoryServiceFactory } from '../../common/service/RepositoryServiceFactory'
+import { RepositoryService } from '../../common/service/RepositoryService';
+import { Employee } from '../lib/Employee';
 import { exhaustMap, map, switchMap, tap, EMPTY, of, observable, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ModalController, ActionSheetController } from '@ionic/angular';

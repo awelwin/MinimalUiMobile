@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { RepositoryService } from "./RepositoryService";
-import { IEntity } from "../common/dto/IEntity";
+import { IEntity } from "../../employee-feature/lib/IEntity";
 
 /**
  NOTE: Factory created due to limitations with typescript generics.

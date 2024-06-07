@@ -2,9 +2,9 @@ import { Component, DestroyRef, OnInit } from '@angular/core';
 import { NgIf, NgFor, } from '@angular/common';
 import { IonSearchbar, IonContent, IonList, IonItem, IonLabel, IonIcon, IonNote } from "@ionic/angular/standalone";
 import { Subject } from 'rxjs';
-import { EmployeeSearchQueryResult } from 'src/app/common/dto/EmployeeSearchQueryResult';
+import { EmployeeSearchQueryResult } from 'src/app/employee-feature/lib/EmployeeSearchQueryResult';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { QueryService } from 'src/app/Infrastructure/QueryService';
+import { QueryService } from 'src/app/common/service/QueryService';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

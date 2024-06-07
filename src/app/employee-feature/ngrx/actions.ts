@@ -1,6 +1,6 @@
 
 import { createAction, emptyProps, props } from "@ngrx/store"
-import { Employee } from "src/app/common/dto/Employee";
+import { Employee } from "src/app/employee-feature/lib/Employee";
 
 //Action Types
 export enum EmployeeFeatureAction {

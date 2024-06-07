@@ -1,7 +1,7 @@
 
-import { Employee } from "src/app/common/dto/Employee";
-import { EmployeeSearchQueryResult } from "src/app/common/dto/EmployeeSearchQueryResult";
-import { IEntity } from "src/app/common/dto/IEntity";
+import { Employee } from "src/app/employee-feature/lib/Employee";
+import { EmployeeSearchQueryResult } from "src/app/employee-feature/lib/EmployeeSearchQueryResult";
+import { IEntity } from "src/app/employee-feature/lib/IEntity";
 import { RouterReducerState } from '@ngrx/router-store';
 
 export interface IActionSheet<T extends IEntity> {

@@ -1,7 +1,7 @@
 
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IEntity } from '../common/dto/IEntity';
+import { IEntity } from '../../employee-feature/lib/IEntity';
 
 /**Provide global configuration settings for http operations
  */

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { IModalComponent } from '../../../common/IModalComponent'
+import { IModalComponent } from '../../../common/ionic/IModalComponent'
 import { IonButton } from "@ionic/angular/standalone";
 import { ModalController } from '@ionic/angular';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { EmployeeFeatureAction } from 'src/app/Infrastructure/ngrx/employee-feature/actions';
-import { modalEntity } from 'src/app/Infrastructure/ngrx/employee-feature/selectors';
-import { Employee } from 'src/app/common/dto/Employee';
+import { EmployeeFeatureAction } from 'src/app/employee-feature/ngrx/actions';
+import { modalEntity } from 'src/app/employee-feature/ngrx/selectors';
+import { Employee } from 'src/app/employee-feature/lib/Employee';
 import { Observable } from 'rxjs';
-import { IEmployeeFeatureState } from 'src/app/Infrastructure/ngrx/employee-feature/state';
+import { IEmployeeFeatureState } from 'src/app/employee-feature/ngrx/state';
 
 @Component({
     selector: 'confirm-delete',

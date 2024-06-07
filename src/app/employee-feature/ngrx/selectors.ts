@@ -1,6 +1,6 @@
 
 import { createSelector, createFeatureSelector } from '@ngrx/store'
-import { Employee } from 'src/app/common/dto/Employee';
+import { Employee } from 'src/app/employee-feature/lib/Employee';
 import { IEmployeeList } from './state';
 
 //EmployeeList

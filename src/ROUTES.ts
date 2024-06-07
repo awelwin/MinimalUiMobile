@@ -1,8 +1,8 @@
 
-import { EmployeeFeatureComponent } from './app/components/employee-feature/employee-feature.component';
-import { EmployeeSearchComponent } from './app/components/employee-feature/employee-search/employee-search.component';
-import { EmployeeListComponent } from './app/components/employee-feature/employee-list/employee-list.component';
-import { EmployeeComponent } from './app/components/employee-feature/employee/employee.component';
+import { EmployeeFeatureComponent } from './app/employee-feature/components/employee-feature.component';
+import { EmployeeSearchComponent } from './app/employee-feature/components/employee-search/employee-search.component';
+import { EmployeeListComponent } from './app/employee-feature/components/employee-list/employee-list.component';
+import { EmployeeComponent } from './app/employee-feature/components/employee/employee.component';
 import { Routes } from '@angular/router';
 
 export const RouteConfig: Routes =

@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Employee } from 'src/app/common/dto/Employee';
+import { Employee } from 'src/app/employee-feature/lib/Employee';
 import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeList_EditRequestAction } from './actions';
 import { INITIAL_STATE } from './state';
 

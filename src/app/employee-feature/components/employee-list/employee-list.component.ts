@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from 'src/app/common/dto/Employee';
+import { Employee } from 'src/app/employee-feature/lib/Employee';
 import { NgFor } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs/internal/Observable';
@@ -8,15 +8,15 @@ import { DatePipe } from '@angular/common';
 import { ellipsisVerticalOutline, filterOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { SearchbarInputEventDetail } from '@ionic/angular';
-import { ISearchbarCustomEvent } from 'src/app/common/ISearchbarCustomEvent'
+import { ISearchbarCustomEvent } from 'src/app/common/ionic/ISearchbarCustomEvent'
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store'
-import { IEmployeeFeatureState } from 'src/app/Infrastructure/ngrx/employee-feature/state';
-import { EmployeeFeatureAction } from 'src/app/Infrastructure/ngrx/employee-feature/actions';
-import { list, actionSheetEntity, actionSheetIsOpen, count, filtered, modalEntity, modalIsOpen } from 'src/app/Infrastructure/ngrx/employee-feature/selectors';
+import { IEmployeeFeatureState } from 'src/app/employee-feature/ngrx/state';
+import { EmployeeFeatureAction } from 'src/app/employee-feature/ngrx/actions';
+import { list, actionSheetEntity, actionSheetIsOpen, count, filtered, modalEntity, modalIsOpen } from 'src/app/employee-feature/ngrx/selectors';
 import { JsonPipe } from '@angular/common';
-import { EntityOperation } from 'src/app/common/EntityOperation';
-import { IActionSheetButton } from 'src/app/common/IActionSheetButton';
+import { EntityOperation } from 'src/app/employee-feature/lib/EntityOperation';
+import { IActionSheetButton } from 'src/app/common/ionic/IActionSheetButton';
 import { ConfirmDeleteModalComponent } from './confirm-delete-modal.component';
 
 @Component({
