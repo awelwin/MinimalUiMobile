@@ -5,7 +5,7 @@ import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs/internal/Observable';
 import { IonCard, IonBadge, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonContent, IonItem, IonLabel, IonText, IonToolbar, IonButton, IonIcon, IonActionSheet, IonSearchbar, IonModal, IonList } from "@ionic/angular/standalone";
 import { DatePipe } from '@angular/common';
-import { ellipsisVerticalOutline, filterOutline } from 'ionicons/icons';
+import { ellipsisVerticalOutline, filterOutline, funnelOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { SearchbarInputEventDetail } from '@ionic/angular';
 import { ISearchbarCustomEvent } from 'src/app/common/ionic/ISearchbarCustomEvent'
@@ -51,7 +51,7 @@ export class ListComponent implements OnInit {
     store.dispatch({ type: EmployeeFeatureAction.Load });
 
     //icons 
-    addIcons({ ellipsisVerticalOutline, filterOutline });
+    addIcons({ ellipsisVerticalOutline, filterOutline, funnelOutline });
 
     //actionsheet
     this._actionSheetButtons = [
