@@ -1,21 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 import { Employee } from 'src/app/employee-feature/lib/Employee';
-import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeList_EditRequestAction } from './actions';
+import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeList_EditRequestAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen, employeeSearch_Cancel } from './actions';
 import { INITIAL_STATE } from './state';
 
-/**
- * EMPLOYEE
- */
 
+//EMPLOYEE
 export const employeeReducer = createReducer(
     INITIAL_STATE.employee,
 
 );
 
-/**
- * EMPLOYEE-LIST
- */
 
+//LIST
 export const employeeListReducer = createReducer(
     INITIAL_STATE.list,
 
@@ -70,6 +66,33 @@ export const employeeListReducer = createReducer(
         }
     })),
 );
+
+//SEARCH
+export const employeeSearchReducer = createReducer(INITIAL_STATE.search,
+    on(employeeSearch_Debounce, (state, action) => ({
+        ...state,
+        debounce: action.payload,
+    })),
+    on(employeeSearch_DebounceResult, (state, action) => ({
+        ...state,
+        results: action.payload,
+        noResult: (action.payload.length < 1 ? true : false)
+    })),
+    on(employeeSearch_ResultChosen, (state, action) => ({
+        debounce: "",
+        results: [],
+        noResult: false
+    })),
+
+    on(employeeSearch_Cancel, (state, action) => ({
+        debounce: "",
+        results: [],
+        noResult: false
+    })),
+
+);
+
+//---------------------------------------------------------------
 
 /*
 Delete Employee

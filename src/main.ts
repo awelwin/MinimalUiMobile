@@ -9,7 +9,7 @@ import { QueryService } from './app/common/service/QueryService';
 import { RepositoryServiceFactory } from './app/common/service/RepositoryServiceFactory';
 import { ModalController } from '@ionic/angular';
 import { provideStore } from '@ngrx/store';
-import { employeeListReducer, employeeReducer } from './app/employee-feature/ngrx/reducers';
+import { employeeListReducer, employeeReducer, employeeSearchReducer } from './app/employee-feature/ngrx/reducers';
 import { RouteConfig } from './ROUTES';
 import { EmployeeListEffects } from './app/employee-feature/ngrx/effects';
 import { provideEffects } from '@ngrx/effects';
@@ -49,9 +49,7 @@ bootstrapApplication(AppComponent, {
 
     // ngrx state management
     provideStore({
-      EmployeeList: employeeListReducer,
-      Employee: employeeReducer,
-      router: routerReducer
+      EmployeeList: employeeListReducer, Employee: employeeReducer, EmployeeSearch: employeeSearchReducer, router: routerReducer
     }),
     provideRouterStore(),
     provideEffects(EmployeeListEffects),

@@ -1,6 +1,7 @@
 
 import { createAction, emptyProps, props } from "@ngrx/store"
 import { Employee } from "src/app/employee-feature/lib/Employee";
+import { EmployeeSearchQueryResult } from "../lib/EmployeeSearchQueryResult";
 
 //Action Types
 export enum EmployeeFeatureAction {
@@ -10,6 +11,7 @@ export enum EmployeeFeatureAction {
     Filter = '[EmployeeList] filter',
     FilterCancel = '[EmployeeList] filterCancel',
     OpenActionSheet = '[EmployeeList] openActionSheet',
+    ActionSheetClose = '[EmployeeList] actionSheetClose',
     LoadResult = '[EmployeeList] loadResult',
     EditRequest = '[EmployeeList] editRequest',
     DeleteRequest = '[EmployeeList] deleteRequest',
@@ -17,7 +19,10 @@ export enum EmployeeFeatureAction {
     DeleteRequestPersisted = '[EmployeeList] deleteRequestPersisted',
     ModalDismiss = '[EmployeeList] modalDismiss',
     FilterResult = '[EmployeeList] filterResult',
-    ActionSheetClose = '[EmployeeList] actionSheetClose',
+    SearchDebounce = '[EmployeeSearch] debounce',
+    SearchDebounceResult = '[EmployeeSearch] debounceResult',
+    SearchResultChosen = '[EmployeeSearch] resultChosen',
+    SearchCancel = '[EmployeeSearch] cancel'
 }
 //navigate
 export const employeeFeature_NavigateAction = createAction(EmployeeFeatureAction.Navigate, props<{ path: string[] }>());
@@ -46,6 +51,11 @@ export const employeeList_ActionSheetCloseAction = createAction(EmployeeFeatureA
 //EmployeeList modal
 export const employeeList_ModalDismissAction = createAction(EmployeeFeatureAction.ModalDismiss, emptyProps);
 
+//search
+export const employeeSearch_Debounce = createAction(EmployeeFeatureAction.SearchDebounce, props<{ payload: string }>())
+export const employeeSearch_DebounceResult = createAction(EmployeeFeatureAction.SearchDebounceResult, props<{ payload: EmployeeSearchQueryResult[] }>())
+export const employeeSearch_ResultChosen = createAction(EmployeeFeatureAction.SearchResultChosen, props<{ payload: number }>());
+export const employeeSearch_Cancel = createAction(EmployeeFeatureAction.SearchCancel, emptyProps);
 
 //NOTE: 'createActionGroup' uses convension to produce name of action and thus cannot be used with SVGAnimatedEnumeration.
 

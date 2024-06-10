@@ -19,10 +19,15 @@ export interface IEmployeeList {
     actionSheet: IActionSheet<Employee>
     modal: IModal<Employee>
 }
+export interface IEmployeeSearch {
+    debounce: string;
+    results: EmployeeSearchQueryResult[];
+    noResult: boolean;
+}
 export interface IEmployeeFeatureState {
     router: RouterReducerState;
     list: IEmployeeList;
-    searchResults: EmployeeSearchQueryResult[];
+    search: IEmployeeSearch;
     employee: Employee;
 }
 
@@ -36,6 +41,10 @@ export const INITIAL_STATE: IEmployeeFeatureState = {
         actionSheet: { isOpen: false, entity: null! },
         modal: { isOpen: false, entity: null! }
     },
-    searchResults: [],
+    search: {
+        debounce: "",
+        results: [],
+        noResult: false
+    },
     employee: null!
 }

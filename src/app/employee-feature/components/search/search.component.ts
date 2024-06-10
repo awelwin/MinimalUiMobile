@@ -1,86 +1,64 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
-import { NgIf, NgFor, } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { NgIf, NgFor, AsyncPipe, } from '@angular/common';
 import { IonSearchbar, IonContent, IonList, IonItem, IonLabel, IonIcon, IonNote } from "@ionic/angular/standalone";
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { EmployeeSearchQueryResult } from 'src/app/employee-feature/lib/EmployeeSearchQueryResult';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { QueryService } from 'src/app/common/service/QueryService';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { IEmployeeFeatureState } from '../../ngrx/state';
+import { EmployeeFeatureAction } from '../../ngrx/actions';
+import { debounce, noResult, results } from '../../ngrx/selectors';
 
 @Component({
   selector: 'employee-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
-  imports: [IonNote, IonIcon, IonLabel, IonItem, IonList, IonContent, IonSearchbar, IonContent, NgIf, NgFor],
+  imports: [AsyncPipe, IonNote, IonIcon, IonLabel, IonItem, IonList, IonContent, IonSearchbar, IonContent, NgIf, NgFor],
   standalone: true
 })
 export class SearchComponent implements OnInit {
 
-  public _search: string = "";
-  public _searchResults: EmployeeSearchQueryResult[] = [];
-  public searchSubject: Subject<any> = new Subject();
-  public _searchNoResult: boolean = false;
+  public _debounce$: Observable<string>;
+  public _results$!: Observable<EmployeeSearchQueryResult[]>;
+  public _noResult$: Observable<boolean>;
 
   constructor(
-    private destroyRef: DestroyRef,
-    private queryService: QueryService,
-    private router: Router, private route: ActivatedRoute) { }
 
+    private queryService: QueryService,
+    private store: Store<IEmployeeFeatureState>) {
+
+    this._debounce$ = this.store.select(debounce);
+    this._results$ = this.store.select(results);
+    this._noResult$ = this.store.select(noResult);
+  }
 
   /*
  ngOnInit*/
-  ngOnInit() {
-
-    //Subsribe to  keystrokes
-    this.searchSubject
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-
-          //cancel search
-          if (this._search == "") {
-            this._searchResults = [];
-            this._searchNoResult = false;
-          }
-          else {
-            //execute search
-            this.queryService.searchEmployee(this._search)
-              .pipe(takeUntilDestroyed(this.destroyRef))
-              .subscribe({
-                next: (result) => {
-                  this._searchResults = result; //save results                 
-                  this._searchNoResult = this._searchResults.length < 1;
-                },
-                error: (err) => console.log(err)
-              });
-          }
-        },
-        error: (err) => console.log(err)
-      });
-
-  }
+  ngOnInit() { }
 
   /* Debounce
    * @param event 
    */
-  searchDebounce(event: any) {
-    let extractedText: string = event.detail.value;
+  debounce(event: any) {
 
-    this._search = extractedText;
-    this.searchSubject.next(this._search);
+    let extractedText: string = event.detail.value;
+    if (extractedText)
+      this.store.dispatch({ type: EmployeeFeatureAction.SearchDebounce, payload: extractedText })
+    else
+      this.cancel();
+  }
+
+  /**
+   * cancel - clear search results
+   */
+  cancel() {
+    this.store.dispatch({ type: EmployeeFeatureAction.SearchCancel, });
   }
 
   /* searchResultChosen()
    *  sets current entity based on search results clicked
    */
-  searchResultChosen(id: number) {
-
-    //cleanup state
-    this._searchResults = [];
-    this._search = "";
-    this._searchNoResult = false;
-
-    //route to employee
-    this.router.navigate(['/employee-feature/employee', id],)
+  resultChosen(id: number) {
+    this.store.dispatch({ type: EmployeeFeatureAction.SearchResultChosen, payload: id });
   }
 }

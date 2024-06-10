@@ -1,7 +1,7 @@
 
 import { createSelector, createFeatureSelector } from '@ngrx/store'
 import { Employee } from 'src/app/employee-feature/lib/Employee';
-import { IEmployeeList } from './state';
+import { IEmployeeList, IEmployeeSearch } from './state';
 
 //EmployeeList
 const employeeFeature_ListSelector = createFeatureSelector<IEmployeeList>("EmployeeList")
@@ -17,3 +17,8 @@ export const modalEntity = createSelector(employeeFeature_ListSelector, (state) 
 const employeeFeature_EmployeeSelector = createFeatureSelector<Employee>("Employee")
 export const employee = createSelector(employeeFeature_EmployeeSelector, (state) => state);
 
+//search
+const employeeFeature_SearchSelector = createFeatureSelector<IEmployeeSearch>("EmployeeSearch");
+export const debounce = createSelector(employeeFeature_SearchSelector, (state) => { return state.debounce });
+export const results = createSelector(employeeFeature_SearchSelector, (state) => { return state.results });
+export const noResult = createSelector(employeeFeature_SearchSelector, (state) => { return state.noResult });

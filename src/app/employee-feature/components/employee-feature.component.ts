@@ -19,13 +19,11 @@ import { EmployeeFeatureAction } from '../ngrx/actions';
     IonFooter,
     IonContent,
     RouterLink, RouterOutlet, RouterModule
-
   ]
 })
 export class EmployeeFeatureComponent implements OnInit {
 
   constructor(private store: Store<IEmployeeFeatureState>) {
-
     addIcons({ searchOutline, listOutline, homeOutline })
   }
 
@@ -33,9 +31,5 @@ export class EmployeeFeatureComponent implements OnInit {
 
   navigate(path: string[]) {
     this.store.dispatch({ type: EmployeeFeatureAction.Navigate, path: path });
-  }
-
-  speak(msg: string) {
-    console.log(msg);
   }
 }
