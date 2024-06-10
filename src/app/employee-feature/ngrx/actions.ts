@@ -4,6 +4,7 @@ import { Employee } from "src/app/employee-feature/lib/Employee";
 
 //Action Types
 export enum EmployeeFeatureAction {
+    Navigate = '[Navigate]',
     List = '[EmployeeList]',
     Load = '[EmployeeList] load',
     Filter = '[EmployeeList] filter',
@@ -18,6 +19,8 @@ export enum EmployeeFeatureAction {
     FilterResult = '[EmployeeList] filterResult',
     ActionSheetClose = '[EmployeeList] actionSheetClose',
 }
+//navigate
+export const employeeFeature_NavigateAction = createAction(EmployeeFeatureAction.Navigate, props<{ path: string[] }>());
 
 //EmployeeList 
 export const employeeList_Action = createAction(EmployeeFeatureAction.List, props<{ employees: Employee[] }>());
