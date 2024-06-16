@@ -1,7 +1,7 @@
 import { EntityOperation } from "src/app/employee-feature/lib/EntityOperation";
 import { TaxFileRecord } from "src/app/employee-feature/lib/TaxFileRecord";
 import { IActionSheet, IModal } from "src/app/employee-feature/ngrx/state";
-import { ComponentStore }
+import { ComponentStore } from '@ngrx/component-store';
 export interface IEmployeeFormState {
     operation: EntityOperation;
     valid: boolean;
