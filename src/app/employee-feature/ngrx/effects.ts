@@ -21,11 +21,18 @@ export class EmployeeListEffects {
         this._repo = repoFactory.getInstance<Employee>(Employee);
     }
 
-
     //navigate
     EmployeeFeatureNavigate = createEffect(() => this.actions$.pipe(
         ofType(employeeFeature_NavigateAction),
         tap(action => { this.router.navigate(action.path) }),
+    ),
+        { dispatch: false }
+    );
+
+    //EMPLOYEE
+    employeeList_EditRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(EmployeeFeatureAction.EditRequest),
+        tap(() => this.router.navigate(['employee-feature/employee']))
     ),
         { dispatch: false }
     );

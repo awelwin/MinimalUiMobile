@@ -2,6 +2,7 @@
 import { createAction, emptyProps, props } from "@ngrx/store"
 import { Employee } from "src/app/employee-feature/lib/Employee";
 import { EmployeeSearchQueryResult } from "../lib/EmployeeSearchQueryResult";
+import { IOperation } from "src/app/employee-feature/ngrx/state"
 
 //Action Types
 export enum EmployeeFeatureAction {

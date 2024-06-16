@@ -2,14 +2,27 @@ import { createReducer, on } from '@ngrx/store';
 import { Employee } from 'src/app/employee-feature/lib/Employee';
 import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeList_EditRequestAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen, employeeSearch_Cancel } from './actions';
 import { INITIAL_STATE } from './state';
+import { EntityOperation } from '../lib/EntityOperation';
 
 
-//EMPLOYEE
-export const employeeReducer = createReducer(
-    INITIAL_STATE.employee,
+//OPERATION
+export const employeeOperationReducer = createReducer(
+    INITIAL_STATE.operation,
 
-);
+    //edit request
+    on(employeeList_EditRequestAction, (state, action) => ({
+        entity: action.payload,
+        operation: EntityOperation.Update,
+    })));
 
+/*export const employeeFormReducer = createReducer(
+    INITIAL_STATE.form,
+ 
+    on(employeeList_EditRequestAction, (state, action) => ({
+        entity: action.payload,
+        operation: EntityOperation.Update,
+    })));
+*/
 
 //LIST
 export const employeeListReducer = createReducer(

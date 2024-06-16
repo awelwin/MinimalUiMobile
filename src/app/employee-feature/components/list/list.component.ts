@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Employee } from 'src/app/employee-feature/lib/Employee';
 import { NgFor } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
@@ -37,7 +37,6 @@ export class ListComponent implements OnInit {
   _actionSheetButtons: IActionSheetButton[];
   _modalIsOpen$!: Observable<boolean>;
   _modalEntity$!: Observable<Employee>;
-
 
   constructor(private store: Store<IEmployeeFeatureState>) {
 

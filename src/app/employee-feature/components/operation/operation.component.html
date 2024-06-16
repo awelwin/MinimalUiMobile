@@ -1,0 +1,5 @@
+<h1>Employee Component</h1>
+<hr>
+<employee-form *ngIf="_employee$ | async as emp" [employee]="emp" [operation]="(_operation$ | async)!">
+</employee-form>
+<hr>
