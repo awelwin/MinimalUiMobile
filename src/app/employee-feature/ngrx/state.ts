@@ -32,16 +32,7 @@ export interface ITaxfileForm {
     employeeId: number;
     alias: string;
 }
-export interface IEmployeeForm {
-    operation: EntityOperation;
-    valid: boolean;
-    ageValid: boolean;
-    firstnameValid: boolean;
-    lastnameValid: boolean;
-    aliasValid: boolean;
-    actionSheet: IActionSheet<TaxFileRecord>;
-    modal: IModal<TaxFileRecord>;
-}
+
 
 export interface IOperation<T extends IEntity> {
     operation: EntityOperation;
@@ -52,7 +43,7 @@ export interface IEmployeeFeatureState {
     list: IEmployeeList;
     search: IEmployeeSearch;
     operation: IOperation<Employee>;
-    form: IEmployeeForm
+
 }
 
 export const INITIAL_STATE: IEmployeeFeatureState = {
@@ -90,17 +81,8 @@ export const INITIAL_STATE: IEmployeeFeatureState = {
                 ]
             }
         }
-    },
-    form: {
-        operation: null!,
-        valid: true,
-        ageValid: true,
-        firstnameValid: true,
-        lastnameValid: true,
-        aliasValid: true,
-        actionSheet: { isOpen: false, entity: null! },
-        modal: { isOpen: false, entity: null! }
     }
+
 }
 
 
