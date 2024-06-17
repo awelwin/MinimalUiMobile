@@ -5,7 +5,7 @@ import { ListComponent } from './list.component';
 import { Employee } from '../../lib/Employee';
 import { of } from 'rxjs';
 import { provideStore } from '@ngrx/store';
-import { employeeListReducer, employeeReducer, employeeSearchReducer } from '../../ngrx/reducers';
+import { employeeListReducer, employeeOperationReducer, employeeSearchReducer } from '../../ngrx/reducers';
 import { provideIonicAngular, IonicRouteStrategy } from '@ionic/angular/standalone';
 import { RepositoryServiceFactory } from 'src/app/common/service/RepositoryServiceFactory';
 import { By } from '@angular/platform-browser';
@@ -14,8 +14,8 @@ import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideEffects } from '@ngrx/effects';
 import { EmployeeListEffects } from '../../ngrx/effects';
 import { RouteReuseStrategy, Router, provideRouter } from '@angular/router';
-import { RouteConfig } from 'src/ROUTES';
-import { ModalController } from '@ionic/angular';
+import { RouteConfig } from 'src/ROUTES'
+
 import { QueryService } from 'src/app/common/service/QueryService';
 import { SearchbarInputEventDetail } from '@ionic/angular';
 import { ISearchbarCustomEvent } from 'src/app/common/ionic/ISearchbarCustomEvent'
@@ -39,7 +39,7 @@ let defaultProviders = [
   provideRouter(RouteConfig),
   Router,
   provideStore({
-    EmployeeList: employeeListReducer, Employee: employeeReducer, EmployeeSearch: employeeSearchReducer, router: routerReducer
+    EmployeeList: employeeListReducer, EmployeeOperation: employeeOperationReducer, EmployeeSearch: employeeSearchReducer, router: routerReducer
   }),
   provideRouterStore(),
   provideEffects(EmployeeListEffects),

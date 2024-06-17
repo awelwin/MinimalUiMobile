@@ -2,7 +2,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RepositoryServiceFactory } from '../../common/service/RepositoryServiceFactory'
 import { RepositoryService } from '../../common/service/RepositoryService';
 import { Employee } from '../lib/Employee';
-import { exhaustMap, map, switchMap, tap, EMPTY, of, observable, Observable } from 'rxjs';
+import { exhaustMap, map, switchMap, tap, EMPTY, of, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EmployeeFeatureAction, employeeFeature_NavigateAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen } from './actions';
 import { Router } from '@angular/router';
@@ -13,14 +13,12 @@ export class EmployeeListEffects {
 
     _repo: RepositoryService<Employee>;
 
-    constructor(
-        private repoFactory: RepositoryServiceFactory,
+    constructor(private router: Router,
         private actions$: Actions,
-        private router: Router,
-        private queryService: QueryService) {
+        private queryService: QueryService,
+        private repoFactory: RepositoryServiceFactory) {
         this._repo = repoFactory.getInstance<Employee>(Employee);
     }
-
     //navigate
     EmployeeFeatureNavigate = createEffect(() => this.actions$.pipe(
         ofType(employeeFeature_NavigateAction),
@@ -71,6 +69,10 @@ export class EmployeeListEffects {
     ),
         { dispatch: false }
     );
+
+
+
+
 
 }
 

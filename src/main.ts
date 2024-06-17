@@ -4,7 +4,7 @@ import { RouteReuseStrategy, Router, provideRouter } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { QueryService } from './app/common/service/QueryService';
 import { RepositoryServiceFactory } from './app/common/service/RepositoryServiceFactory';
 import { ModalController } from '@ionic/angular';
@@ -12,7 +12,8 @@ import { provideStore } from '@ngrx/store';
 import { employeeFormReducer, employeeListReducer, employeeOperationReducer, employeeSearchReducer } from './app/employee-feature/ngrx/reducers';
 import { RouteConfig } from './ROUTES';
 import { EmployeeListEffects } from './app/employee-feature/ngrx/effects';
-import { provideEffects } from '@ngrx/effects';
+import { Actions, provideEffects } from '@ngrx/effects';
+
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { FormBuilder } from '@angular/forms';
@@ -35,7 +36,7 @@ bootstrapApplication(AppComponent, {
   providers: [
 
     //ionic
-    importProvidersFrom(HttpClientModule),
+    provideHttpClient(),
     ModalController,
     FormBuilder,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -50,6 +51,7 @@ bootstrapApplication(AppComponent, {
     Router,
 
     // ngrx state management
+
     provideStore({
       EmployeeList: employeeListReducer,
       EmployeeOperation: employeeOperationReducer,
@@ -58,6 +60,7 @@ bootstrapApplication(AppComponent, {
       router: routerReducer
     }),
     provideRouterStore(),
+    Actions,
     provideEffects(EmployeeListEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
 
