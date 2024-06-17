@@ -8,7 +8,7 @@ import { Routes } from '@angular/router';
 export const RouteConfig: Routes =
   [
 
-    { path: '', redirectTo: 'employee-feature/employee', pathMatch: 'full', },
+    { path: '', redirectTo: 'employee-feature/operation', pathMatch: 'full', },
     //{ path: '', redirectTo: 'employee-feature/list', pathMatch: 'full', },
     {
       path: 'employee-feature', component: EmployeeFeatureComponent, children: [

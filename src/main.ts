@@ -15,6 +15,7 @@ import { EmployeeListEffects } from './app/employee-feature/ngrx/effects';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+import { FormBuilder } from '@angular/forms';
 
 
 
@@ -36,6 +37,7 @@ bootstrapApplication(AppComponent, {
     //ionic
     importProvidersFrom(HttpClientModule),
     ModalController,
+    FormBuilder,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
 
