@@ -4,7 +4,7 @@ import { RouteReuseStrategy, Router, provideRouter } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { QueryService } from './app/common/service/QueryService';
 import { RepositoryServiceFactory } from './app/common/service/RepositoryServiceFactory';
 import { ModalController } from '@ionic/angular';
