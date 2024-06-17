@@ -12,8 +12,9 @@ import { TaxFileRecord } from 'src/app/employee-feature/lib/TaxFileRecord';
 import { NgFor } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { IActionSheetButton } from 'src/app/common/ionic/IActionSheetButton';
-import { IEmployeeForm } from 'src/app/employee-feature/ngrx/state';
+
 import { Store } from '@ngrx/store';
+import { IEmployeeFormState } from './ngrx';
 @Component({
   selector: 'employee-form',
   templateUrl: './employee-form.component.html',
@@ -37,12 +38,12 @@ export class EmployeeFormComponent implements OnInit {
   _lastnameValid$!: Observable<boolean>;
   _aliasValid$!: Observable<boolean>;
   _valid$!: Observable<boolean>;
-
+  _actionSheetIsOpen$!: Observable<boolean>;
   _actionSheetButtons: IActionSheetButton[] = null!;
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<IEmployeeForm>
+    private store: Store<IEmployeeFormState>
   ) { }
 
   ngOnInit() {
@@ -104,7 +105,7 @@ export class EmployeeFormComponent implements OnInit {
   actionSheetDismiss(ev: any) {
 
     //close sheet
-    this.store.dispatch({ type: EmployeeFeatureAction.ActionSheetClose });
+    //this.store.dispatch({ type: EmployeeFeatureAction.ActionSheetClose });
 
     /*
     if (ev.detail.data !== null && ev.detail.data !== "") //NOT cancel or backdrop clicked

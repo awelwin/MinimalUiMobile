@@ -9,7 +9,7 @@ import { QueryService } from './app/common/service/QueryService';
 import { RepositoryServiceFactory } from './app/common/service/RepositoryServiceFactory';
 import { ModalController } from '@ionic/angular';
 import { provideStore } from '@ngrx/store';
-import { employeeListReducer, employeeOperationReducer, employeeSearchReducer } from './app/employee-feature/ngrx/reducers';
+import { employeeFormReducer, employeeListReducer, employeeOperationReducer, employeeSearchReducer } from './app/employee-feature/ngrx/reducers';
 import { RouteConfig } from './ROUTES';
 import { EmployeeListEffects } from './app/employee-feature/ngrx/effects';
 import { provideEffects } from '@ngrx/effects';

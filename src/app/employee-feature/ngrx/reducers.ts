@@ -15,14 +15,13 @@ export const employeeOperationReducer = createReducer(
         operation: EntityOperation.Update,
     })));
 
-/*export const employeeFormReducer = createReducer(
-    INITIAL_STATE.form,
- 
+export const employeeFormReducer = createReducer(
+    INITIAL_STATE.operation.entity,
+
     on(employeeList_EditRequestAction, (state, action) => ({
-        entity: action.payload,
-        operation: EntityOperation.Update,
+        ...state
     })));
-*/
+
 
 //LIST
 export const employeeListReducer = createReducer(

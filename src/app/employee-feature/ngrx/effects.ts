@@ -32,7 +32,7 @@ export class EmployeeListEffects {
     //EMPLOYEE
     employeeList_EditRequest$ = createEffect(() => this.actions$.pipe(
         ofType(EmployeeFeatureAction.EditRequest),
-        tap(() => this.router.navigate(['employee-feature/employee']))
+        tap(() => this.router.navigate(['employee-feature/operation']))
     ),
         { dispatch: false }
     );
@@ -67,7 +67,7 @@ export class EmployeeListEffects {
     //resultChosen
     employeeSearch_ResultChosen$ = createEffect(() => this.actions$.pipe(
         ofType(employeeSearch_ResultChosen),
-        tap(action => { this.router.navigate([`/employee-feature/employee/${action.payload}`]) }),
+        tap(action => { this.router.navigate([`/employee-feature/operation/${action.payload}`]) }),
     ),
         { dispatch: false }
     );
