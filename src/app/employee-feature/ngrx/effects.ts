@@ -4,7 +4,7 @@ import { RepositoryService } from '../../common/service/RepositoryService';
 import { Employee } from '../lib/Employee';
 import { exhaustMap, map, switchMap, tap, EMPTY, of, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { EmployeeFeatureAction, employeeFeature_NavigateAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen } from './actions';
+import { EmployeeFeatureAction, employeeFeature_NavigateAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen, employeeSearch_ResultLoaded } from './actions';
 import { Router } from '@angular/router';
 import { QueryService } from 'src/app/common/service/QueryService';
 
@@ -79,9 +79,19 @@ export class EmployeeListEffects {
     //resultChosen
     employeeSearch_ResultChosen$ = createEffect(() => this.actions$.pipe(
         ofType(employeeSearch_ResultChosen),
-        tap(action => { this.router.navigate([`/employee-feature/form/${action.payload}`]) }),
+        switchMap((x) => {
+            return this._repo.getWithId(x.payload).pipe(
+                map(e => ({ type: EmployeeFeatureAction.SearchResultLoaded, payload: e })))
+        })
+    ));
+
+    //resultLoaded
+    employeeSearch_ResultLoaded$ = createEffect(() => this.actions$.pipe(
+        ofType(employeeSearch_ResultLoaded),
+        tap(x => this.router.navigate(['employee-feature/form']))
     ),
         { dispatch: false }
     );
+
 }
 

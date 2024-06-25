@@ -24,6 +24,7 @@ export enum EmployeeFeatureAction {
     SearchDebounce = '[EmployeeSearch] debounce',
     SearchDebounceResult = '[EmployeeSearch] debounceResult',
     SearchResultChosen = '[EmployeeSearch] resultChosen',
+    SearchResultLoaded = '[EmployeeSearch] resultLoaded',
     SearchCancel = '[EmployeeSearch] cancel'
 }
 //navigate
@@ -58,10 +59,13 @@ export const employeeSearch_Debounce = createAction(EmployeeFeatureAction.Search
 export const employeeSearch_DebounceResult = createAction(EmployeeFeatureAction.SearchDebounceResult, props<{ payload: EmployeeSearchQueryResult[] }>())
 export const employeeSearch_ResultChosen = createAction(EmployeeFeatureAction.SearchResultChosen, props<{ payload: number }>());
 export const employeeSearch_Cancel = createAction(EmployeeFeatureAction.SearchCancel, emptyProps);
+export const employeeSearch_ResultLoaded = createAction(EmployeeFeatureAction.SearchResultLoaded, props<{ payload: Employee }>());
 
+//form
 export const employeeForm_editRequestAction = createAction(EmployeeFeatureAction.EditRequest, props<{ payload: Employee }>());
 export const employeeForm_editRequestConfirmedAction = createAction(EmployeeFeatureAction.EditRequestConfirmed, props<{ payload: Employee }>());
 export const employeeForm_editRequestPersistedAction = createAction(EmployeeFeatureAction.EditRequestPersisted, props<{ payload: Employee }>());
+
 //NOTE: 'createActionGroup' uses convension to produce name of action and thus cannot be used with SVGAnimatedEnumeration.
 
 

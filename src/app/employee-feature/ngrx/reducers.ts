@@ -1,11 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { Employee } from 'src/app/employee-feature/lib/Employee';
-import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen, employeeSearch_Cancel, employeeForm_editRequestPersistedAction, employeeForm_editRequestAction } from './actions';
-import { INITIAL_STATE } from './state';
+import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen, employeeSearch_Cancel, employeeForm_editRequestPersistedAction, employeeForm_editRequestAction, employeeSearch_ResultLoaded } from './actions';
+import { IForm, INITIAL_STATE } from './state';
 import { EntityOperation } from '../../common/EntityOperation';
 import { FormUtils } from '../../common/utils/FormUtils';
 import { IActionSheetButton } from 'src/app/common/ionic/IActionSheetButton';
-import { IForm } from 'src/app/common/IForm';
 
 
 //LIST SLICE
@@ -100,6 +99,7 @@ export const employeeSearchReducer = createReducer(INITIAL_STATE.search,
         results: [],
         noResult: false
     })),
+
 );
 
 //Form SLICE
@@ -110,6 +110,12 @@ export const employeeFormReducer = createReducer(
         entity: action.payload,
         operation: EntityOperation.Update
     })),
+
+    on(employeeSearch_ResultLoaded, (state, action) => ({
+        entity: action.payload,
+        operation: EntityOperation.Update
+
+    }))
 );
 
 //---------------------------------------------------------------

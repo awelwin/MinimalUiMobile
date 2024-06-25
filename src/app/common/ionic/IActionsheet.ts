@@ -1,5 +1,5 @@
+import { IForm } from "src/app/employee-feature/ngrx/state";
 import { IEntity } from "../IEntity";
-import { IForm } from "../IForm";
 import { IActionSheetButton } from "./IActionSheetButton";
 
 

@@ -1,8 +1,7 @@
 
 import { createSelector, createFeatureSelector } from '@ngrx/store'
 import { Employee } from 'src/app/employee-feature/lib/Employee';
-import { IEmployeeList, IEmployeeSearch } from './state';
-import { IForm } from 'src/app/common/IForm';
+import { IEmployeeList, IEmployeeSearch, IForm } from './state';
 
 //EmployeeList
 const employeeFeature_ListSelector = createFeatureSelector<IEmployeeList>("EmployeeList")

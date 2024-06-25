@@ -11,14 +11,13 @@ import { SearchbarInputEventDetail } from '@ionic/angular';
 import { ISearchbarCustomEvent } from 'src/app/common/ionic/ISearchbarCustomEvent'
 import { Subject, } from 'rxjs';
 import { Store } from '@ngrx/store'
-import { IEmployeeFeatureState } from 'src/app/employee-feature/ngrx/state';
+import { IEmployeeFeatureState, IForm } from 'src/app/employee-feature/ngrx/state';
 import { EmployeeFeatureAction } from 'src/app/employee-feature/ngrx/actions';
 import { list, actionSheetIsOpen, count, filtered, modalIsOpen, actionSheetButtons, employee } from 'src/app/employee-feature/ngrx/selectors';
 import { JsonPipe } from '@angular/common';
 import { EntityOperation } from 'src/app/common/EntityOperation';
 import { IActionSheetButton } from 'src/app/common/ionic/IActionSheetButton';
 import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
-import { IForm } from 'src/app/common/IForm';
 
 @Component({
   selector: 'employee-list',

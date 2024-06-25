@@ -5,7 +5,7 @@ import { RouterReducerState } from '@ngrx/router-store';
 import { EntityOperation } from "../../common/EntityOperation";
 import { IModal } from "src/app/common/ionic/IModal";
 import { IActionSheet } from "src/app/common/ionic/IActionsheet";
-import { IForm } from "src/app/common/IForm";
+import { IEntity } from "src/app/common/IEntity";
 
 export interface IEmployeeList {
     list: Employee[];
@@ -23,6 +23,11 @@ export interface ITaxfileForm {
     id: number
     employeeId: number;
     alias: string;
+}
+
+export interface IForm<T extends IEntity> {
+    operation: EntityOperation;
+    entity: T;
 }
 
 export interface IEmployeeFeatureState {
@@ -60,7 +65,7 @@ export const INITIAL_STATE: IEmployeeFeatureState = {
     form:
     {
         operation: EntityOperation.Update,
-        entity: null!
+        entity: null!,
     }
 }
 
