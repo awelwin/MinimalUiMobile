@@ -1,0 +1,116 @@
+<div *ngIf="this._FORM$ | async as _FORM">
+
+  <form [formGroup]=_FORM>
+    <div class="container form">
+      <div class="row">
+        <div class="col">
+
+          <div class="form-group">
+            <div class="form-group-header"> PERSONAL DETAILS </div>
+
+            <!--Firstname-->
+
+            <div
+              [ngClass]="(_store.selectFirstnameValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
+              <div class="form-control">
+                <label class="form-control-label" for="firstname">firstname</label>
+                <input [formControl]="_FORM.controls['firstname']" class="form-control-input" id="firstname"
+                  type="text" />
+              </div>
+              <div class="form-control-msg" [hidden]="_store.selectFirstnameValid$ | async"> max length 50</div>
+            </div>
+
+            <!--lastname-->
+            <div
+              [ngClass]="(_store.selectLastnameValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
+              <div class="form-control">
+                <label class="form-control-label" for="lastname">lastname</label>
+                <input [formControl]="_FORM.controls['lastname']" class="form-control-input" id="lastname"
+                  type="text" />
+              </div>
+              <div class="form-control-msg" [hidden]="_store.selectLastnameValid$ | async"> maxlength 50</div>
+            </div>
+
+            <!--age-->
+            <div
+              [ngClass]="(_store.selectAgeValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
+              <div class="form-control">
+                <label class="form-control-label" for="age">age</label>
+                <input [formControl]="_FORM.controls['age']" class="form-control-input" id="age" type="text" />
+              </div>
+              <div class="form-control-msg" [hidden]="_store.selectAgeValid$ | async"> must be number</div>
+            </div>
+
+          </div> <!--formGroup-->
+        </div> <!--col-->
+      </div><!--row-->
+    </div><!--con-->
+
+    <!--TaxFile-->
+    <div class="container form">
+      <div class="row">
+        <div class="col">
+          <div class="form-group-header">Tax File</div>
+          <ion-list>
+            <ion-item-group>
+
+              <!--TaxFile Alias-->
+              <div
+                [ngClass]="(_store.selectAliasValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
+                <div class="form-control">
+                  <label class="form-control-label" for="age">alias:</label>
+                  <input [formControl]="_FORM.get('taxFile.alias')" class="form-control-input" id="alias" type="text" />
+                </div>
+                <div class="form-control-msg" [hidden]="_store.selectAliasValid$ | async"> maxlength 50</div>
+              </div>
+              <br>
+              <!--Line Item-->
+              <ion-item *ngFor="let tfr of _store.selectTaxFileRecords$ | async">
+                <ion-label>{{tfr.financialYear}} paid: ${{tfr.amountPaid}} claim: ${{tfr.amountClaimed}}</ion-label>
+                <ion-button fill="clear" (click)="tfrMenuClick(tfr)">
+                  <ion-icon name="ellipsis-vertical-outline" class="menu-button"></ion-icon>
+                </ion-button>
+              </ion-item>
+
+              <!--Add-->
+              <div class="entity-menu">
+                <ion-button fill="clear" class="text-end" (click)=tfrAddRequest()>
+                  add
+                </ion-button>
+              </div>
+
+            </ion-item-group>
+          </ion-list>
+
+          <!--SUBMIT-->
+          <div>
+
+            <ion-button style="width:100%"
+              [disabled]="!(_store.selectValid$ | async) || (_store.selectSubmitted | async)"
+              (click)="submit(_FORM.getRawValue());">Submit</ion-button>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </form> <!--_employeeForm-->
+</div>
+
+<!--MODAL-->
+<ion-content>
+  <ion-modal id="modal" [isOpen]="_store.selectModalIsOpen$ | async" (willDismiss)="modalDismiss($event)">
+    <ng-template>
+      <!--TFR Form-->
+      <tfr-form [entity]="_store.selectActionSheetEntity$ | async" (cancel)="tfrCancel()"
+        (confirm)="tfrConfirm($event )"></tfr-form>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+
+<!--Actionsheet menu-->
+<ion-action-sheet [isOpen]="_store.selectActionSheetIsOpen$ | async" [buttons]="_actionSheetButtons$ | async"
+  (willDismiss)="actionSheetDismiss($event)">
+</ion-action-sheet>

@@ -1,4 +1,4 @@
-import { IEntity } from "./IEntity";
+import { IEntity } from "../../common/IEntity";
 
 
 export class TaxFileRecord implements IEntity {

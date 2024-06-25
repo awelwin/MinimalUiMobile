@@ -1,7 +1,7 @@
 import { TaxFile } from "./TaxFile";
 import {
     IEntity
-} from "./IEntity";
+} from "../../common/IEntity";
 
 export class Employee implements IEntity {
 

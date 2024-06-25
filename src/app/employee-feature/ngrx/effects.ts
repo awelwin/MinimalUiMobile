@@ -27,13 +27,27 @@ export class EmployeeListEffects {
         { dispatch: false }
     );
 
-    //EMPLOYEE
+    //OPERATION
     employeeList_EditRequest$ = createEffect(() => this.actions$.pipe(
         ofType(EmployeeFeatureAction.EditRequest),
-        tap(() => this.router.navigate(['employee-feature/operation']))
+        tap(() => this.router.navigate(['employee-feature/form']))
     ),
         { dispatch: false }
     );
+
+    employeeList_EditRequestPersisted$ = createEffect(() => this.actions$.pipe(
+        ofType(EmployeeFeatureAction.EditRequestPersisted),
+        tap(() => this.router.navigate(['employee-feature/list']))
+    ),
+        { dispatch: false }
+    );
+
+    employeeList_EditRequestConfirmed$ = createEffect(() => this.actions$.pipe(
+        ofType(EmployeeFeatureAction.EditRequestConfirmed),
+        exhaustMap((action: any) => this._repo.put(action.payload.id, action.payload).pipe(
+            map(result => ({ type: EmployeeFeatureAction.EditRequestPersisted, payload: action }))
+        )
+        )));
 
     //LIST
     // Load -> loadResult
@@ -65,14 +79,9 @@ export class EmployeeListEffects {
     //resultChosen
     employeeSearch_ResultChosen$ = createEffect(() => this.actions$.pipe(
         ofType(employeeSearch_ResultChosen),
-        tap(action => { this.router.navigate([`/employee-feature/operation/${action.payload}`]) }),
+        tap(action => { this.router.navigate([`/employee-feature/form/${action.payload}`]) }),
     ),
         { dispatch: false }
     );
-
-
-
-
-
 }
 

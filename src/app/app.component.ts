@@ -1,16 +1,17 @@
 import { Component, Inject } from '@angular/core';
-import { IonMenuToggle, IonToolbar, IonTitle, IonContent, IonMenu, IonHeader, IonButtons, IonMenuButton, IonFooter, IonList, IonItem, IonLabel, IonIcon, IonButton, IonApp } from '@ionic/angular/standalone';
+import { IonMenuToggle, IonToolbar, IonTitle, IonContent, IonMenu, IonHeader, IonButtons, IonMenuButton, IonFooter, IonList, IonItem, IonLabel, IonIcon, IonButton, IonApp, IonActionSheet } from '@ionic/angular/standalone';
 import { EmployeeFeatureComponent } from './employee-feature/components/employee-feature.component';
 import { personOutline, people, callOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router';
+import { ListComponent } from './employee-feature/components/list/list.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [IonApp, IonButton, IonIcon, IonLabel, IonItem, IonList,
+  imports: [IonActionSheet, IonApp, IonButton, IonIcon, IonLabel, IonItem, IonList,
     IonFooter,
     IonButtons,
     IonHeader,
@@ -21,10 +22,12 @@ import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router'
     EmployeeFeatureComponent,
     IonMenuButton,
     IonMenuToggle,
-    RouterModule, RouterLink, RouterOutlet
+    RouterModule, RouterLink, RouterOutlet, ListComponent
   ],
 })
 export class AppComponent {
+
+  actionSheetButtons: any;
 
   @Inject(Router)
   private router!: Router;

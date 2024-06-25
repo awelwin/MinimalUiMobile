@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 export function NumericValidator(control: AbstractControl): ValidationErrors | null {
     const isNumber = typeof +control.value === "number" && !isNaN(+control.value);

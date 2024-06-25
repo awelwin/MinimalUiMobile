@@ -1,32 +1,32 @@
 <div class="ion-page">
-
-  <router-outlet></router-outlet>
-
-
-  <!--EMPLOYEE AGGREGATE MENU-->
+  <ion-content>
+    <router-outlet></router-outlet><!--ION CONTENT WRAPPER OR RANDOM UI RENDERING-->
+  </ion-content>
   <ion-footer>
     <ion-toolbar>
 
-      <ion-tabs>
-        <ion-tab-bar slot="bottom">
+      <!--ION-TABS COST SO MUCH TIME WITH RANDOM UNKNOWN RENDERING ERRORS LIKE DUPLICATE ACTION SHEETS . REMOVED-->
+      <div class="tab-menu">
 
-          <ion-tab-button (click)="navigate(['employee-feature/list'])">
-            <ion-icon name="list-outline"></ion-icon>
-            list
-          </ion-tab-button>
+        <!--List-->
+        <div class="tab-button" (click)="navigate(['employee-feature/list'])">
+          <div><ion-icon name="list-outline" size="large"></ion-icon></div>
+          <span class="tab-button-text">list</span>
+        </div>
 
-          <ion-tab-button (click)="navigate(['employee-feature/employee'])">
-            <ion-icon name="person-outline"></ion-icon>
-            employee
-          </ion-tab-button>
+        <!--Form-->
+        <div [hidden]="!(_hasOperation$ | async)" class="tab-button" (click)="navigate(['employee-feature/form'])">
+          <div><ion-icon name="person-outline" size="large"></ion-icon></div>
+          <span class="tab-button-text">employee</span>
+        </div>
 
-          <ion-tab-button (click)="navigate(['employee-feature/search'])">
-            <ion-icon name="search-outline"></ion-icon>
-            search
-          </ion-tab-button>
-        </ion-tab-bar>
-      </ion-tabs>
-
+        <!--Search-->
+        <div class="tab-button" (click)="navigate(['employee-feature/search'])">
+          <div><ion-icon name="search-outline" size="large"></ion-icon></div>
+          <span class="tab-button-text">search</span>
+        </div>
+      </div>
     </ion-toolbar>
   </ion-footer>
+
 </div>

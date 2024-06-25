@@ -1,46 +1,31 @@
 import { createReducer, on } from '@ngrx/store';
 import { Employee } from 'src/app/employee-feature/lib/Employee';
-import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeList_EditRequestAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen, employeeSearch_Cancel } from './actions';
+import { employeeList_LoadResultAction, employeeList_FilterAction, employeeList_OpenActionSheetAction, employeeList_DeleteRequestAction, employeeList_ActionSheetCloseAction, employeeList_DeleteRequestConfirmedAction, employeeList_DeleteRequestPersistedAction, employeeList_ModalDismissAction, employeeSearch_Debounce, employeeSearch_DebounceResult, employeeSearch_ResultChosen, employeeSearch_Cancel, employeeForm_editRequestPersistedAction, employeeForm_editRequestAction } from './actions';
 import { INITIAL_STATE } from './state';
-import { EntityOperation } from '../lib/EntityOperation';
+import { EntityOperation } from '../../common/EntityOperation';
+import { FormUtils } from '../../common/utils/FormUtils';
+import { IActionSheetButton } from 'src/app/common/ionic/IActionSheetButton';
+import { IForm } from 'src/app/common/IForm';
 
 
-//OPERATION
-export const employeeOperationReducer = createReducer(
-    INITIAL_STATE.operation,
-
-    //edit request
-    on(employeeList_EditRequestAction, (state, action) => ({
-        entity: action.payload,
-        operation: EntityOperation.Update,
-    })));
-
-export const employeeFormReducer = createReducer(
-    INITIAL_STATE.operation.entity,
-
-    on(employeeList_EditRequestAction, (state, action) => ({
-        ...state
-    })));
-
-
-//LIST
+//LIST SLICE
 export const employeeListReducer = createReducer(
     INITIAL_STATE.list,
 
-    //load
+    //
     on(employeeList_LoadResultAction, (state, action) => ({
         ...state,
         list: action.payload,
         listFiltered: action.payload
     })),
 
-    //delete
     on(employeeList_DeleteRequestAction, (state, action) => ({
         ...state,
         modal: {
             isOpen: true,
             entity: state.actionSheet.entity
-        }
+        },
+        actionSheet: { ...state.actionSheet, isOpen: false }
     })),
 
     on(employeeList_ModalDismissAction,
@@ -51,11 +36,22 @@ export const employeeListReducer = createReducer(
     on(employeeList_DeleteRequestPersistedAction, (state, action) =>
     ({
         ...state,
-        list: deleteEmployee(state.list, action.payload.id),
-        listFiltered: deleteEmployee(state.listFiltered, action.payload.id)
+        list: FormUtils.deleteEntity<Employee>(state.list, action.payload.id),
+        listFiltered: FormUtils.deleteEntity<Employee>(state.listFiltered, action.payload.id)
     })),
 
-    //filter
+    on(employeeForm_editRequestAction, (state, action) => ({
+        ...state,
+        actionSheet: { ...state.actionSheet, isOpen: false }
+    })),
+
+    on(employeeForm_editRequestPersistedAction, (state, action) =>
+    ({
+        ...state,
+        list: FormUtils.updateEntity<Employee>(state.list, action.payload),
+        listFiltered: FormUtils.updateEntity<Employee>(state.listFiltered, action.payload)
+    })),
+
     on(employeeList_FilterAction, (state, filter) => ({
         ...state,
         list: state.list,
@@ -63,23 +59,26 @@ export const employeeListReducer = createReducer(
     })),
 
     //action-sheet
-    on(employeeList_ActionSheetCloseAction, (state, action) => ({
-        ...state,
-        actionSheet: {
-            ...state.actionSheet,
-            isOpen: false
+    on(employeeList_ActionSheetCloseAction, (state, action) => {
+        return {
+            ...state,
+            actionSheet: { ...state.actionSheet, isOpen: false }
         }
-    })),
-    on(employeeList_OpenActionSheetAction, (state, action) => ({
-        ...state,
-        actionSheet: {
-            isOpen: true,
-            entity: action.payload
+    }),
+
+    on(employeeList_OpenActionSheetAction, (state, action) => {
+        let updatedButtons = state.actionSheet.buttons.map(x => ({
+            ...x, data: { ...x.data, entity: action.payload } // <--employee
+        })) as IActionSheetButton<IForm<Employee>>[];
+
+        return {
+            ...state,
+            actionSheet: { isOpen: true, entity: action.payload, buttons: updatedButtons }
         }
-    })),
+    }),
 );
 
-//SEARCH
+//SEARCH SLICE
 export const employeeSearchReducer = createReducer(INITIAL_STATE.search,
     on(employeeSearch_Debounce, (state, action) => ({
         ...state,
@@ -101,26 +100,19 @@ export const employeeSearchReducer = createReducer(INITIAL_STATE.search,
         results: [],
         noResult: false
     })),
+);
 
+//Form SLICE
+export const employeeFormReducer = createReducer(
+    INITIAL_STATE.form,
+
+    on(employeeForm_editRequestAction, (state, action) => ({
+        entity: action.payload,
+        operation: EntityOperation.Update
+    })),
 );
 
 //---------------------------------------------------------------
-
-/*
-Delete Employee
- */
-function deleteEmployee(list: Employee[], id: number): Employee[] {
-    if (list == null)
-        return [];
-
-    let newList: Employee[] = [...list];
-
-    let index: number = list.findIndex(x => x.id == id);
-    if (index > -1)
-        newList.splice(index, 1);
-
-    return newList;
-}
 
 /*
 Filter list

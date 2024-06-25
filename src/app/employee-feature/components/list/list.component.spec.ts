@@ -1,6 +1,6 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule, IonSearchbar, IonCard } from '@ionic/angular';
+import { ModalController, IonSearchbar, IonCard } from '@ionic/angular';
 import { ListComponent } from './list.component';
 import { Employee } from '../../lib/Employee';
 import { of } from 'rxjs';
@@ -67,7 +67,7 @@ describe('EmployeeListComponent_Load', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
   beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({ imports: [IonicModule.forRoot()], providers: defaultProviders }).compileComponents();
+    TestBed.configureTestingModule({ imports: [], providers: defaultProviders }).compileComponents();
 
     // <<< ACT >>>
 
@@ -82,7 +82,6 @@ describe('EmployeeListComponent_Load', () => {
     let debug: DebugElement = fixture.debugElement;
     expect(component).toBeTruthy();
     let ACTUAL = debug.queryAll(By.css('ion-card')).length;
-    console.log(ACTUAL);
     expect(ACTUAL).toEqual(DEFAULT_EXPECTED.length)
   });
 
@@ -105,7 +104,7 @@ describe('EmployeeListComponent_Filter', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule(
       {
-        imports: [IonicModule.forRoot()],
+        imports: [],
         providers: defaultProviders,
       }).compileComponents();
 

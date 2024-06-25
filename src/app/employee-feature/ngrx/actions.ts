@@ -2,7 +2,6 @@
 import { createAction, emptyProps, props } from "@ngrx/store"
 import { Employee } from "src/app/employee-feature/lib/Employee";
 import { EmployeeSearchQueryResult } from "../lib/EmployeeSearchQueryResult";
-import { IOperation } from "src/app/employee-feature/ngrx/state"
 
 //Action Types
 export enum EmployeeFeatureAction {
@@ -15,6 +14,8 @@ export enum EmployeeFeatureAction {
     ActionSheetClose = '[EmployeeList] actionSheetClose',
     LoadResult = '[EmployeeList] loadResult',
     EditRequest = '[EmployeeList] editRequest',
+    EditRequestConfirmed = '[Form] editRequestConfirmed',
+    EditRequestPersisted = '[Form] editRequestPersisted',
     DeleteRequest = '[EmployeeList] deleteRequest',
     DeleteRequestConfirmed = '[EmployeeList] deleteRequestConfirmed',
     DeleteRequestPersisted = '[EmployeeList] deleteRequestPersisted',
@@ -58,6 +59,9 @@ export const employeeSearch_DebounceResult = createAction(EmployeeFeatureAction.
 export const employeeSearch_ResultChosen = createAction(EmployeeFeatureAction.SearchResultChosen, props<{ payload: number }>());
 export const employeeSearch_Cancel = createAction(EmployeeFeatureAction.SearchCancel, emptyProps);
 
+export const employeeForm_editRequestAction = createAction(EmployeeFeatureAction.EditRequest, props<{ payload: Employee }>());
+export const employeeForm_editRequestConfirmedAction = createAction(EmployeeFeatureAction.EditRequestConfirmed, props<{ payload: Employee }>());
+export const employeeForm_editRequestPersistedAction = createAction(EmployeeFeatureAction.EditRequestPersisted, props<{ payload: Employee }>());
 //NOTE: 'createActionGroup' uses convension to produce name of action and thus cannot be used with SVGAnimatedEnumeration.
 
 

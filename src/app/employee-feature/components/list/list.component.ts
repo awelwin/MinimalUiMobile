@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/app/employee-feature/lib/Employee';
 import { NgFor } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
@@ -9,15 +9,16 @@ import { ellipsisVerticalOutline, filterOutline, funnelOutline } from 'ionicons/
 import { addIcons } from 'ionicons';
 import { SearchbarInputEventDetail } from '@ionic/angular';
 import { ISearchbarCustomEvent } from 'src/app/common/ionic/ISearchbarCustomEvent'
-import { Subject } from 'rxjs';
+import { Subject, } from 'rxjs';
 import { Store } from '@ngrx/store'
 import { IEmployeeFeatureState } from 'src/app/employee-feature/ngrx/state';
 import { EmployeeFeatureAction } from 'src/app/employee-feature/ngrx/actions';
-import { list, actionSheetEntity, actionSheetIsOpen, count, filtered, modalEntity, modalIsOpen } from 'src/app/employee-feature/ngrx/selectors';
+import { list, actionSheetIsOpen, count, filtered, modalIsOpen, actionSheetButtons, employee } from 'src/app/employee-feature/ngrx/selectors';
 import { JsonPipe } from '@angular/common';
-import { EntityOperation } from 'src/app/employee-feature/lib/EntityOperation';
+import { EntityOperation } from 'src/app/common/EntityOperation';
 import { IActionSheetButton } from 'src/app/common/ionic/IActionSheetButton';
 import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
+import { IForm } from 'src/app/common/IForm';
 
 @Component({
   selector: 'employee-list',
@@ -28,13 +29,14 @@ import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-dele
 })
 export class ListComponent implements OnInit {
 
+  //THESE VARIABLES TO BE MOVED TO LOCAL COMPONENT STATE TODO..
   _filter$ = new Subject<string | undefined | null>;
   _list$!: Observable<Employee[]>;
   _listCount$!: Observable<number>;
   _listFiltered$!: Observable<Employee[]>;
   _actionSheetIsOpen$!: Observable<boolean>;
   _actionSheetEntity$!: Observable<Employee>;
-  _actionSheetButtons: IActionSheetButton[];
+  _actionSheetButtons$: Observable<IActionSheetButton<IForm<Employee>>[]>;
   _modalIsOpen$!: Observable<boolean>;
   _modalEntity$!: Observable<Employee>;
 
@@ -46,18 +48,11 @@ export class ListComponent implements OnInit {
     this._listFiltered$ = store.select(filtered);
     this._actionSheetIsOpen$ = store.select(actionSheetIsOpen);
     this._modalIsOpen$ = store.select(modalIsOpen);
-
+    this._actionSheetButtons$ = store.select(actionSheetButtons);
     store.dispatch({ type: EmployeeFeatureAction.Load });
 
     //icons 
     addIcons({ ellipsisVerticalOutline, filterOutline, funnelOutline });
-
-    //actionsheet
-    this._actionSheetButtons = [
-      { text: "delete", cssClass: "action-sheet-button-delete", data: EntityOperation.DeleteRequest },
-      { text: "edit", cssClass: "action-sheet-button-default", data: EntityOperation.Update },
-      { text: "cancel", cssClass: "action-sheet-button-default", data: "" }
-    ];
 
   }
 
@@ -85,22 +80,17 @@ export class ListComponent implements OnInit {
     this.store.dispatch({ type: EmployeeFeatureAction.Filter, payload: "" });
   }
 
-  /*
-  actionSheetDismiss
-   */
-  actionSheetDismiss(ev: any) {
 
-    //close sheet
-    this.store.dispatch({ type: EmployeeFeatureAction.ActionSheetClose });
+  actionSheetDismiss(op: IForm<Employee>) {
+    this.store.dispatch({ type: EmployeeFeatureAction.ActionSheetClose })
 
-    if (ev.detail.data !== null && ev.detail.data !== "") //NOT cancel or backdrop clicked
-      switch (ev.detail.data) {
-        case EntityOperation.DeleteRequest:
-          this.store.dispatch({ type: EmployeeFeatureAction.DeleteRequest }); break;
-        case EntityOperation.Update:
-          this.store.dispatch({ type: EmployeeFeatureAction.EditRequest });
+    if (op) {
+      switch (op.operation) {
+        case EntityOperation.Update: this.store.dispatch({ type: EmployeeFeatureAction.EditRequest, payload: op.entity });
           break;
+        case EntityOperation.DeleteRequest: this.store.dispatch({ type: EmployeeFeatureAction.DeleteRequest, payload: op.entity }); break;
       }
+    }
   }
 
   /**
@@ -110,4 +100,6 @@ export class ListComponent implements OnInit {
   modalDismiss(ev: any) {
     this.store.dispatch({ type: EmployeeFeatureAction.ModalDismiss });
   }
+
+
 }

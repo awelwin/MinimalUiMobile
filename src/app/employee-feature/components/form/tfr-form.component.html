@@ -1,0 +1,52 @@
+<form [formGroup]=_FORM class="wrapper">
+
+  <div class="container form modal-header border-0">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+
+          <!--financialYear-->
+
+          <div
+            [ngClass]="(_store.financialYearValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
+            <div class="form-control">
+              <label class="form-control-label" for="financialYear">financial year:</label>
+              <input [formControl]="_FORM.controls['financialYear']" class="form-control-input" id="financialYear"
+                type="text" />
+            </div>
+            <div class="form-control-msg" [hidden]="_store.financialYearValid$ | async"> max length 50</div>
+          </div>
+
+          <!--Amount Paid-->
+          <div [ngClass]="(_store.amountPaidValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
+            <div class="form-control">
+              <label class="form-control-label" for="amountPaid">paid:</label>
+              <input [formControl]="_FORM.controls['amountPaid']" class="form-control-input" id="amountPaid"
+                type="text" />
+            </div>
+            <div class="form-control-msg" [hidden]="_store.amountPaidValid$ | async"> maxlength 50</div>
+          </div>
+          <!--Amount Claimed-->
+          <div
+            [ngClass]="(_store.amountClaimedValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
+            <div class="form-control">
+              <label class="form-control-label" for="amountClaimed">claimed:</label>
+              <input [formControl]="_FORM.controls['amountClaimed']" class="form-control-input" id="amountClaimed"
+                type="text" />
+            </div>
+            <div class="form-control-msg" [hidden]="_store.amountClaimedValid$ | async"> must be number</div>
+          </div>
+        </div>
+      </div> <!--col-->
+    </div><!--row-->
+  </div><!--con-->
+
+  <!--SUBMIT-->
+  <div>
+    <ion-button (click)="cancel()" class="btn btn-info">cancel</ion-button>
+    <ion-button [disabled]="!(_store.valid$ | async) || _FORM.pristine" (click)="confirm()">Submit</ion-button>
+
+
+  </div>
+
+</form>

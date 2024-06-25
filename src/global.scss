@@ -1,14 +1,3 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
@@ -27,9 +16,20 @@
 
 @import '@ionic/angular/css/palettes/dark.system.css';
 
-:root {
-    --ion-font-family: "San Francisco", "Helvetica-Neue", "Roboto-Light", sans-serif !important;
+//Font - google NunitoSans
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+
+[hidden] {
+    display: none !important;
 }
+
+:root {
+    //--ion-font-family: "San Francisco", "Helvetica-Neue", "Roboto-Light", sans-serif !important;
+    --ion-font-family: "Nunito Sans", sans-serif !important;
+    --ion-background-color: white;
+}
+
 
 //ACTION SHEET
 .action-sheet-button-delete {
@@ -40,6 +40,12 @@
 //border-top: 1px solid grey !important;}
 .action-sheet-button-default {
     color: black !important;
+}
+
+//Main Menu
+ion-menu-button {
+    --color: white;
+    --background: black;
 }
 
 //MODAL ------------------
@@ -71,46 +77,103 @@ ion-modal .wrapper {
     margin: 20px;
 }
 
-//END MODAL------------
-
 //-------GENERIC FORM STYLES-------
-.form {
+.entity-title {
+    color: rgba(128, 128, 128, 0.6);
+    display: block;
+    width: 100%;
+    text-align: center;
+}
 
+//------- FORM CONTROLS --------------
+.form {
     margin-left: 10%;
     margin-right: 10%;
-}
-
-.formControl {
-    padding-top: 5px;
-    padding-bottom: 5px;
 
 }
 
-.formLabel {
-    display: block;
+.form-group {
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 40px
 }
 
-.formInput {
+.form-group-header {
+    color: rgb(186, 185, 185);
+    font-weight: bold;
+}
 
+.form-control-wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: rgba(141, 141, 141, 0.652);
+}
+
+.form-control-wrapper-invalid {
+    margin-top: 10px;
+    color: red !important;
+}
+
+.ng-invalid.ng-dirty:not(form) {
+    border-bottom: 4px solid red;
+    border-top: none;
+    background-color: #fed3d3;
+    /* red */
+}
+
+.form-control-msg {
+    font-style: italic;
+    font-size: smaller;
+    text-align: right;
+}
+
+.form-control {
+    display: flex;
     width: 100%;
-    border: 2px solid black
+}
+
+.form-control-label {
+    font-size: smaller;
+    width: 80px;
+    margin-right: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-top: 6px
+}
+
+.form-control-input {
+    border-top: 0px;
+    border-left: none;
+    border-bottom: 3px dotted rgba(211, 210, 210, 0.652);
+    border-right: none;
+    padding: 3px 3px 0px 12px;
+    color: black;
+    vertical-align: bottom;
+    width: 100%;
 }
 
 input:focus {
     outline: none;
-    border: 2px solid black;
-    border-radius: none;
-
 }
 
-.ng-invalid:not(form) {
-    border: 3px solid red;
-    /* red */
+
+
+//---------------
+//Aggregate / entity relationships
+
+.entity-menu {
+    display: block;
+    text-align: right;
+    width: 100%;
 }
 
-.form-alert {
-    background-color: #fed3d3;
-    color: #820000;
-    padding: 1rem;
-    margin-bottom: 1rem;
+//-----------
+//Ionic components
+ion-item-divider {
+    background-color: rgba(128, 128, 128, 0.175);
+    border: none;
+    padding-left: 0px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }

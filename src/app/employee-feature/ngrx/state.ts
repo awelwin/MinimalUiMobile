@@ -1,19 +1,11 @@
 
 import { Employee } from "src/app/employee-feature/lib/Employee";
 import { EmployeeSearchQueryResult } from "src/app/employee-feature/lib/EmployeeSearchQueryResult";
-import { IEntity } from "src/app/employee-feature/lib/IEntity";
 import { RouterReducerState } from '@ngrx/router-store';
-import { EntityOperation } from "../lib/EntityOperation";
-import { TaxFileRecord } from "../lib/TaxFileRecord";
-
-export interface IActionSheet<T extends IEntity> {
-    isOpen: boolean,
-    entity: T
-}
-export interface IModal<T extends IEntity> {
-    isOpen: boolean,
-    entity: T
-}
+import { EntityOperation } from "../../common/EntityOperation";
+import { IModal } from "src/app/common/ionic/IModal";
+import { IActionSheet } from "src/app/common/ionic/IActionsheet";
+import { IForm } from "src/app/common/IForm";
 
 export interface IEmployeeList {
     list: Employee[];
@@ -33,16 +25,11 @@ export interface ITaxfileForm {
     alias: string;
 }
 
-
-export interface IOperation<T extends IEntity> {
-    operation: EntityOperation;
-    entity: T;
-}
 export interface IEmployeeFeatureState {
     router: RouterReducerState;
     list: IEmployeeList;
     search: IEmployeeSearch;
-    operation: IOperation<Employee>;
+    form: IForm<Employee>;
 
 }
 
@@ -53,7 +40,15 @@ export const INITIAL_STATE: IEmployeeFeatureState = {
     {
         list: [],
         listFiltered: [],
-        actionSheet: { isOpen: false, entity: null! },
+        actionSheet: {
+            isOpen: false,
+            entity: null!,
+            buttons: [
+                { text: "delete", cssClass: "action-sheet-button-delete", data: { operation: EntityOperation.DeleteRequest, entity: null! } },
+                { text: "edit", cssClass: "action-sheet-button-default", data: { operation: EntityOperation.Update, entity: null! } },
+                { text: "cancel", cssClass: "action-sheet-button-default", data: { operation: null!, entity: null! } }
+            ]
+        },
         modal: { isOpen: false, entity: null! }
     },
     search: {
@@ -62,27 +57,11 @@ export const INITIAL_STATE: IEmployeeFeatureState = {
         noResult: false
     },
 
-    operation:
+    form:
     {
         operation: EntityOperation.Update,
-        entity: {
-            id: 1,
-            firstname: 'first1',
-            lastname: 'last1',
-            age: 29,
-            resourceName: '',
-            created: new Date(),
-            updated: new Date(),
-            taxFile: {
-                id: 1, employeeId: 1, alias: 'alias1', resourceName: '', created: new Date(), updated: new Date(),
-                taxFileRecords: [
-                    { resourceName: '', id: 1, taxFileId: 1, financialYear: 1209, amountClaimed: 55, amountPaid: 88, created: new Date(), updated: new Date() },
-                    { resourceName: '', id: 2, taxFileId: 1, financialYear: 1999, amountClaimed: 44, amountPaid: 108, created: new Date(), updated: new Date() }
-                ]
-            }
-        }
+        entity: null!
     }
-
 }
 
 

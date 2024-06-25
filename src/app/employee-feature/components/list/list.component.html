@@ -44,17 +44,18 @@
 
 
     <!--MODAL-->
+
     <ion-modal id="modal" [isOpen]="_modalIsOpen$! | async" (willDismiss)="modalDismiss($event)">
       <ng-template>
         <confirm-delete></confirm-delete>
       </ng-template>
     </ion-modal>
 
+
+    <!--Actionsheet menu-->
+    <ion-action-sheet [isOpen]="_actionSheetIsOpen$! | async" [buttons]="_actionSheetButtons$ | async"
+      (willDismiss)="actionSheetDismiss($event.detail.data)">
+    </ion-action-sheet>
+
   </ion-content>
 </div>
-
-<!--Actionsheet menu-->
-<ion-action-sheet [isOpen]="_actionSheetIsOpen$ | async" [buttons]="_actionSheetButtons"
-  (willDismiss)="actionSheetDismiss($event)">
-
-</ion-action-sheet>

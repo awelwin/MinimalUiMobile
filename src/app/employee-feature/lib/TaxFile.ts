@@ -1,6 +1,6 @@
 import { identifierName } from '@angular/compiler';
 import { TaxFileRecord } from './TaxFileRecord';
-import { IEntity } from './IEntity';
+import { IEntity } from '../../common/IEntity';
 
 export class TaxFile implements IEntity {
 

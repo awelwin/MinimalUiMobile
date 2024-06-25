@@ -1,5 +1,5 @@
 
-import { IEntity } from "../../employee-feature/lib/IEntity";
+import { IEntity } from "../IEntity";
 
 /**
  * ModalComponent - components placed inside a modal window

@@ -1,15 +1,26 @@
-.menu {
-    color: white;
-    background-color: black;
+.tab-menu {
+    display: inline-block;
+    width: 340px;
 }
 
-
-ion-tab-bar,
-ion-tab-button {
+.tab-button {
+    cursor: pointer;
     background-color: black;
     color: white;
+    display: inline-block;
+    width: 33%;
+    height: 100%;
+    text-align: center;
 }
 
-ion-button.tab {
-    background-color: orange;
+.tab-button-text {
+    font-size: 14px;
+}
+
+ion-toolbar {
+    text-align: center;
+    --background: black;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    display: block;
 }
