@@ -7,34 +7,31 @@
 
           <!--financialYear-->
 
-          <div
-            [ngClass]="(_store.financialYearValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
-            <div class="form-control">
-              <label class="form-control-label" for="financialYear">financial year:</label>
-              <input [formControl]="_FORM.controls['financialYear']" class="form-control-input" id="financialYear"
+          <div [ngClass]="(_store.financialYearValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+            <div class="control">
+              <label class="control-label" for="financialYear">financial year:</label>
+              <input [formControl]="_FORM.controls['financialYear']" class="control-input" id="financialYear"
                 type="text" />
             </div>
-            <div class="form-control-msg" [hidden]="_store.financialYearValid$ | async"> max length 50</div>
+            <div class="control-msg" [hidden]="_store.financialYearValid$ | async"> max length 50</div>
           </div>
 
           <!--Amount Paid-->
-          <div [ngClass]="(_store.amountPaidValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
-            <div class="form-control">
-              <label class="form-control-label" for="amountPaid">paid:</label>
-              <input [formControl]="_FORM.controls['amountPaid']" class="form-control-input" id="amountPaid"
-                type="text" />
+          <div [ngClass]="(_store.amountPaidValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+            <div class="control">
+              <label class="control-label" for="amountPaid">paid:</label>
+              <input [formControl]="_FORM.controls['amountPaid']" class="control-input" id="amountPaid" type="text" />
             </div>
-            <div class="form-control-msg" [hidden]="_store.amountPaidValid$ | async"> maxlength 50</div>
+            <div class="control-msg" [hidden]="_store.amountPaidValid$ | async"> maxlength 50</div>
           </div>
           <!--Amount Claimed-->
-          <div
-            [ngClass]="(_store.amountClaimedValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
-            <div class="form-control">
-              <label class="form-control-label" for="amountClaimed">claimed:</label>
-              <input [formControl]="_FORM.controls['amountClaimed']" class="form-control-input" id="amountClaimed"
+          <div [ngClass]="(_store.amountClaimedValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+            <div class="control">
+              <label class="control-label" for="amountClaimed">claimed:</label>
+              <input [formControl]="_FORM.controls['amountClaimed']" class="control-input" id="amountClaimed"
                 type="text" />
             </div>
-            <div class="form-control-msg" [hidden]="_store.amountClaimedValid$ | async"> must be number</div>
+            <div class="control-msg" [hidden]="_store.amountClaimedValid$ | async"> must be number</div>
           </div>
         </div>
       </div> <!--col-->

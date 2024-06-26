@@ -6,39 +6,34 @@
         <div class="col">
 
           <div class="form-group">
-            <div class="form-group-header"> PERSONAL DETAILS </div>
+            <div class="form-group-header"> Personal </div>
 
             <!--Firstname-->
 
-            <div
-              [ngClass]="(_store.selectFirstnameValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
-              <div class="form-control">
-                <label class="form-control-label" for="firstname">firstname</label>
-                <input [formControl]="_FORM.controls['firstname']" class="form-control-input" id="firstname"
-                  type="text" />
+            <div [ngClass]="(_store.selectFirstnameValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+              <div class="control">
+                <div class="control-label">Firstname</div>
+                <input [formControl]="_FORM.controls['firstname']" class="control-input" id="firstname" type="text" />
               </div>
-              <div class="form-control-msg" [hidden]="_store.selectFirstnameValid$ | async"> max length 50</div>
+              <div class="control-msg" [hidden]="_store.selectFirstnameValid$ | async"> max length 50</div>
             </div>
 
             <!--lastname-->
-            <div
-              [ngClass]="(_store.selectLastnameValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
-              <div class="form-control">
-                <label class="form-control-label" for="lastname">lastname</label>
-                <input [formControl]="_FORM.controls['lastname']" class="form-control-input" id="lastname"
-                  type="text" />
+            <div [ngClass]="(_store.selectLastnameValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+              <div class="control">
+                <div class="control-label">Lastname</div>
+                <input [formControl]="_FORM.controls['lastname']" class="control-input" id="lastname" type="text" />
               </div>
-              <div class="form-control-msg" [hidden]="_store.selectLastnameValid$ | async"> maxlength 50</div>
+              <div class="control-msg" [hidden]="_store.selectLastnameValid$ | async"> maxlength 50</div>
             </div>
 
             <!--age-->
-            <div
-              [ngClass]="(_store.selectAgeValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
-              <div class="form-control">
-                <label class="form-control-label" for="age">age</label>
-                <input [formControl]="_FORM.controls['age']" class="form-control-input" id="age" type="text" />
+            <div [ngClass]="(_store.selectAgeValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+              <div class="control">
+                <div class="control-label">Age</div>
+                <input [formControl]="_FORM.controls['age']" class="control-input" id="age" type="text" />
               </div>
-              <div class="form-control-msg" [hidden]="_store.selectAgeValid$ | async"> must be number</div>
+              <div class="control-msg" [hidden]="_store.selectAgeValid$ | async"> must be number</div>
             </div>
 
           </div> <!--formGroup-->
@@ -55,13 +50,12 @@
             <ion-item-group>
 
               <!--TaxFile Alias-->
-              <div
-                [ngClass]="(_store.selectAliasValid$ | async ) ? 'form-control-wrapper' : 'form-control-wrapper-invalid'">
-                <div class="form-control">
-                  <label class="form-control-label" for="age">alias:</label>
-                  <input [formControl]="_FORM.get('taxFile.alias')" class="form-control-input" id="alias" type="text" />
+              <div [ngClass]="(_store.selectAliasValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+                <div class="control">
+                  <label class="control-label" for="age">alias:</label>
+                  <input [formControl]="_FORM.get('taxFile.alias')" class="control-input" id="alias" type="text" />
                 </div>
-                <div class="form-control-msg" [hidden]="_store.selectAliasValid$ | async"> maxlength 50</div>
+                <div class="control-msg" [hidden]="_store.selectAliasValid$ | async"> maxlength 50</div>
               </div>
               <br>
               <!--Line Item-->

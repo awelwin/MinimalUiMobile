@@ -103,58 +103,60 @@ ion-modal .wrapper {
     font-weight: bold;
 }
 
-.form-control-wrapper {
+.control-wrapper {
     margin-top: 20px;
     margin-bottom: 20px;
-    color: rgba(141, 141, 141, 0.652);
+    color: rgba(69, 69, 69, 0.652);
 }
 
-.form-control-wrapper-invalid {
-    margin-top: 10px;
+
+.control-wrapper-invalid {
+    //margin-top: 10px;
     color: red !important;
 }
 
-.ng-invalid.ng-dirty:not(form) {
-    border-bottom: 4px solid red;
-    border-top: none;
-    background-color: #fed3d3;
-    /* red */
-}
-
-.form-control-msg {
+.control-msg {
     font-style: italic;
     font-size: smaller;
     text-align: right;
 }
 
-.form-control {
+.control {
     display: flex;
     width: 100%;
 }
 
-.form-control-label {
-    font-size: smaller;
-    width: 80px;
-    margin-right: 5px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    vertical-align: bottom;
-    padding-top: 6px
+.control:focus-within {
+    color: orange;
 }
 
-.form-control-input {
-    border-top: 0px;
-    border-left: none;
-    border-bottom: 3px dotted rgba(211, 210, 210, 0.652);
-    border-right: none;
-    padding: 3px 3px 0px 12px;
-    color: black;
-    vertical-align: bottom;
+.control-label {
+    float: left;
+    position: absolute;
+    margin-bottom: 0px;
+    margin-left: 8px;
+    padding: 0px 5px 0px 5px;
+    z-index: 10;
+    background-color: white;
+    font-size: small;
+    font-style: italic;
+}
+
+.control-input {
+    border: 2px solid;
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 13px;
+    height: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
     width: 100%;
 }
 
-input:focus {
-    outline: none;
+.control-input:focus {
+    border: 2px solid;
+    outline: none !important;
+
 }
 
 
