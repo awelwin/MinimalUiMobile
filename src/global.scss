@@ -16,7 +16,7 @@
 
 @import '@ionic/angular/css/palettes/dark.system.css';
 
-//Font - google NunitoSans
+//Font 
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
 
@@ -42,11 +42,43 @@
     color: black !important;
 }
 
-//Main Menu
-ion-menu-button {
-    --color: white;
-    --background: black;
+ion-header {
+
+    color: white;
+    background-color: white;
+    padding: 0px;
+    margin: 0px;
+
+    //generated svg css from https://www.svgbackgrounds.com/set/free-svg-backgrounds-and-patterns/
+    background-color: #ff9d00;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23000' stroke-width='62.6' stroke-opacity='0.07' %3E%3Ccircle fill='%23ff9d00' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%23fb8d17' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%23f47d24' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%23ed6e2d' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23e35f34' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%23d85239' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%23cc453e' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23be3941' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23b02f43' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23a02644' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23901e44' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23801843' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%236f1341' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%235e0f3d' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%234e0c38' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%233e0933' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%232e062c' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23210024' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+
 }
+
+ion-toolbar {
+    --background: none;
+    --color: none;
+    padding: 0px;
+    margin: 0px;
+
+}
+
+ion-title {
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+
+ion-menu-button {
+
+    color: white;
+    --background: none;
+}
+
+
+
 
 //MODAL ------------------
 ion-modal {
@@ -63,18 +95,39 @@ ion-modal h1 {
 
 ion-modal ion-icon {
     margin-right: 6px;
-
     width: 48px;
     height: 48px;
-
     padding: 4px 0;
-
     color: #aaaaaa;
 }
 
 ion-modal .wrapper {
-
     margin: 20px;
+}
+
+input {
+    outline: none !important;
+    border: 1px solid;
+
+}
+
+.hr-full {
+    height: 2px;
+    display: block;
+    margin: 5px 20px 0px 0px;
+    background-color: rgb(153, 152, 152);
+    width: 100%;
+}
+
+.hr-right {
+    height: 2px;
+    justify-content: right;
+    background-color: rgb(153, 152, 152);
+    display: block;
+    max-width: 100%;
+    margin-left: 80%;
+    margin-top: 3px;
+    margin-bottom: 15px;
 }
 
 //-------GENERIC FORM STYLES-------
@@ -86,33 +139,41 @@ ion-modal .wrapper {
 }
 
 //------- FORM CONTROLS --------------
-.form {
-    margin-left: 10%;
-    margin-right: 10%;
-
-}
 
 .form-group {
-    border-radius: 5px;
     margin-top: 10px;
-    margin-bottom: 40px
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .form-group-header {
-    color: rgb(186, 185, 185);
+    color: white;
+    background-color: rgb(210, 210, 210);
     font-weight: bold;
+    padding: 15px 10px 15px 20px;
+    margin-bottom: 10px;
+}
+
+.form-group-subheader {
+    font-weight: bold;
+    margin-top: 25px;
 }
 
 .control-wrapper {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    color: rgba(69, 69, 69, 0.652);
+    color: rgba(88, 88, 88, 0.652);
 }
 
-
 .control-wrapper-invalid {
-    //margin-top: 10px;
     color: red !important;
+}
+
+.control {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.control:focus-within {
+    color: orange !important;
 }
 
 .control-msg {
@@ -121,44 +182,22 @@ ion-modal .wrapper {
     text-align: right;
 }
 
-.control {
-    display: flex;
-    width: 100%;
-}
+.control-input {
 
-.control:focus-within {
-    color: orange;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 7%);
+    width: 100%;
+    height: 30px;
+    font-size: small;
+    padding: 10px;
 }
 
 .control-label {
-    float: left;
-    position: absolute;
-    margin-bottom: 0px;
-    margin-left: 8px;
-    padding: 0px 5px 0px 5px;
-    z-index: 10;
-    background-color: white;
+    display: block;
     font-size: small;
-    font-style: italic;
+    font-weight: bolder;
+    margin-bottom: 0px;
 }
-
-.control-input {
-    border: 2px solid;
-    background-color: white;
-    border-radius: 8px;
-    margin-top: 13px;
-    height: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
-    width: 100%;
-}
-
-.control-input:focus {
-    border: 2px solid;
-    outline: none !important;
-
-}
-
 
 
 //---------------

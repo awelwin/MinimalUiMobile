@@ -1,92 +1,95 @@
 <div *ngIf="this._FORM$ | async as _FORM">
 
   <form [formGroup]=_FORM>
-    <div class="container form">
-      <div class="row">
-        <div class="col">
 
-          <div class="form-group">
-            <div class="form-group-header"> Personal </div>
+    <div class="form">
 
-            <!--Firstname-->
+      <div class="form-group-header"> EMPLOYEE </div>
 
-            <div [ngClass]="(_store.selectFirstnameValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
-              <div class="control">
-                <div class="control-label">Firstname</div>
-                <input [formControl]="_FORM.controls['firstname']" class="control-input" id="firstname" type="text" />
-              </div>
-              <div class="control-msg" [hidden]="_store.selectFirstnameValid$ | async"> max length 50</div>
-            </div>
+      <div class="form-group">
 
-            <!--lastname-->
-            <div [ngClass]="(_store.selectLastnameValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
-              <div class="control">
-                <div class="control-label">Lastname</div>
-                <input [formControl]="_FORM.controls['lastname']" class="control-input" id="lastname" type="text" />
-              </div>
-              <div class="control-msg" [hidden]="_store.selectLastnameValid$ | async"> maxlength 50</div>
-            </div>
+        <div class="form-group-subheader">Personal</div>
+        <div class="hr-full"></div>
+        <div class="hr-right"></div>
 
-            <!--age-->
-            <div [ngClass]="(_store.selectAgeValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
-              <div class="control">
-                <div class="control-label">Age</div>
-                <input [formControl]="_FORM.controls['age']" class="control-input" id="age" type="text" />
-              </div>
-              <div class="control-msg" [hidden]="_store.selectAgeValid$ | async"> must be number</div>
-            </div>
+        <!--Firstname-->
 
-          </div> <!--formGroup-->
-        </div> <!--col-->
-      </div><!--row-->
-    </div><!--con-->
-
-    <!--TaxFile-->
-    <div class="container form">
-      <div class="row">
-        <div class="col">
-          <div class="form-group-header">Tax File</div>
-          <ion-list>
-            <ion-item-group>
-
-              <!--TaxFile Alias-->
-              <div [ngClass]="(_store.selectAliasValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
-                <div class="control">
-                  <label class="control-label" for="age">alias:</label>
-                  <input [formControl]="_FORM.get('taxFile.alias')" class="control-input" id="alias" type="text" />
-                </div>
-                <div class="control-msg" [hidden]="_store.selectAliasValid$ | async"> maxlength 50</div>
-              </div>
-              <br>
-              <!--Line Item-->
-              <ion-item *ngFor="let tfr of _store.selectTaxFileRecords$ | async">
-                <ion-label>{{tfr.financialYear}} paid: ${{tfr.amountPaid}} claim: ${{tfr.amountClaimed}}</ion-label>
-                <ion-button fill="clear" (click)="tfrMenuClick(tfr)">
-                  <ion-icon name="ellipsis-vertical-outline" class="menu-button"></ion-icon>
-                </ion-button>
-              </ion-item>
-
-              <!--Add-->
-              <div class="entity-menu">
-                <ion-button fill="clear" class="text-end" (click)=tfrAddRequest()>
-                  add
-                </ion-button>
-              </div>
-
-            </ion-item-group>
-          </ion-list>
-
-          <!--SUBMIT-->
-          <div>
-
-            <ion-button style="width:100%"
-              [disabled]="!(_store.selectValid$ | async) || (_store.selectSubmitted | async)"
-              (click)="submit(_FORM.getRawValue());">Submit</ion-button>
-
+        <div [ngClass]="(_store.selectFirstnameValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+          <div class="control">
+            <div class="control-label">firstname</div>
+            <input [formControl]="_FORM.controls['firstname']" class="control-input" id="firstname" type="text" />
+            <div class="control-msg" [hidden]="_store.selectFirstnameValid$ | async"> max length 50</div>
           </div>
 
         </div>
-      </div>
+
+        <!--lastname-->
+        <div [ngClass]="(_store.selectLastnameValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+          <div class="control">
+            <div class="control-label">lastname</div>
+            <input [formControl]="_FORM.controls['lastname']" class="control-input" id="lastname" type="text" />
+            <div class="control-msg" [hidden]="_store.selectLastnameValid$ | async"> maxlength 50</div>
+          </div>
+        </div>
+
+        <!--age-->
+        <div [ngClass]="(_store.selectAgeValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+          <div class="control">
+            <div class="control-label">age</div>
+            <input [formControl]="_FORM.controls['age']" class="control-input" id="age" type="text" />
+            <div class="control-msg" [hidden]="_store.selectAgeValid$ | async"> must be number</div>
+          </div>
+        </div>
+
+      </div> <!--formGroup-->
+    </div><!--con-->
+
+    <!--TaxFile-->
+
+
+    <div class="form-group">
+      <div class="form-group-subheader">Tax File</div>
+      <div class="hr-full"></div>
+      <div class="hr-right"></div>
+      <ion-list>
+        <ion-item-group>
+
+          <!--TaxFile Alias-->
+          <div [ngClass]="(_store.selectAliasValid$ | async ) ? 'control-wrapper' : 'control-wrapper-invalid'">
+            <div class="control">
+              <label class="control-label" for="age">alias:</label>
+              <input [formControl]="_FORM.get('taxFile.alias')" class="control-input" id="alias" type="text" />
+              <div class="control-msg" [hidden]="_store.selectAliasValid$ | async"> maxlength 50</div>
+            </div>
+          </div>
+          <br>
+          <!--Line Item-->
+          <ion-item *ngFor="let tfr of _store.selectTaxFileRecords$ | async">
+            <ion-label>{{tfr.financialYear}} paid: ${{tfr.amountPaid}} claim: ${{tfr.amountClaimed}}</ion-label>
+            <ion-button fill="clear" (click)="tfrMenuClick(tfr)">
+              <ion-icon name="ellipsis-vertical-outline" class="menu-button"></ion-icon>
+            </ion-button>
+          </ion-item>
+
+          <!--Add-->
+          <div class="entity-menu">
+            <ion-button fill="clear" class="text-end" (click)=tfrAddRequest()>
+              add
+            </ion-button>
+          </div>
+
+        </ion-item-group>
+      </ion-list>
+      <ion-button style="width:100%" [disabled]="!(_store.selectValid$ | async) || (_store.selectSubmitted | async)"
+        (click)="submit(_FORM.getRawValue());">Submit</ion-button>
+
+    </div>
+
+
+    <!--SUBMIT-->
+    <div>
+
+
     </div>
 
   </form> <!--_employeeForm-->
